@@ -11,7 +11,7 @@ public class App {
         m[0].setJudul("apa");
         m[1].setJudul("kapan");
         m[2].setJudul("siapa");
-        m[3].setJudul("bagaimana");
+        m[3].setJudul("bagaimana"); // aku tambahin komen di sini
         m[4].setJudul("mengapa");
         m[5].setJudul("di mana");
 
