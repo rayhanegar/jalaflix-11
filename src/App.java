@@ -3,13 +3,13 @@ public class App {
         Movie m[] = new Movie[6];
         m[0] = new Reguler();
         m[1] = new Reguler();
-        m[2] = new Baru();
-        m[3] = new Baru(); // ini ;perubahan
+        m[2] = new Baru(); // test
+        m[3] = new Baru(); // ini perubahan
         m[4] = new Original();
         m[5] = new Original();
 
         m[0].setJudul("apa");
-        m[1].setJudul("kapan"); //P
+        m[1].setJudul("kapan"); // P
         m[2].setJudul("siapa");
         m[3].setJudul("bagaimana"); // aku tambahin komen di sini
         m[4].setJudul("mengapa");
