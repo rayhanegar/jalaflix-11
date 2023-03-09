@@ -4,7 +4,7 @@ public class App {
         m[0] = new Reguler();
         m[1] = new Reguler();
         m[2] = new Baru();
-        m[3] = new Baru();
+        m[3] = new Baru(); // ini ;perubahan
         m[4] = new Original();
         m[5] = new Original();
 
