@@ -5,7 +5,7 @@ public class App {
         m[1] = new Reguler();
         m[2] = new Baru(); // test
         m[3] = new Baru(); // ini perubahan
-        m[4] = new Original();
+        m[4] = new Original(); // dari hugo
         m[5] = new Original();
 
         m[0].setJudul("apa");
