@@ -9,7 +9,7 @@ public class App {
         m[5] = new Original();
 
         m[0].setJudul("apa");
-        m[1].setJudul("kapan");
+        m[1].setJudul("kapan"); //P
         m[2].setJudul("siapa");
         m[3].setJudul("bagaimana"); // aku tambahin komen di sini
         m[4].setJudul("mengapa");
