@@ -15,6 +15,8 @@ public class App {
         m[4].setJudul("mengapa");
         m[5].setJudul("di mana");
 
+        // Why is gitHub so hard maneee
+
         User u = new Regular();
         // System.out.println(u.getKasta());
         u.getMovie(u.getKasta(), m);
