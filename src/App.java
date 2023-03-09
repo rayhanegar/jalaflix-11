@@ -13,7 +13,7 @@ public class App {
         m[2].setJudul("siapa");
         m[3].setJudul("bagaimana"); // aku tambahin komen di sini
         m[4].setJudul("mengapa");
-        m[5].setJudul("di mana");
+        m[5].setJudul("di mana");// ini dri hasan
 
         // Why is gitHub so hard maneee
 
