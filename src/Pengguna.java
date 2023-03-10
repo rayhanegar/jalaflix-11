@@ -1,26 +1,27 @@
-public class User {
+public class Pengguna {
 
-    protected String kode, nama, telp, kasta; // kasta = reguler, gold, plat
+    protected String kode, nama, telp, tier; // tier = reguler, gold, plat
     protected String[] akses;
     protected boolean status;
     protected String[] history = new String[10]; // maks 10 film dalam history
 
-    User() {
+    Pengguna() {
     }
 
-    User(String kode, String nama, String telp, boolean status) {
+    Pengguna(String kode, String nama, String telp, String tier, boolean status) {
         this.kode = kode;
         this.nama = nama;
         this.telp = telp;
+        this.tier = tier;
         this.status = status;
     }
 
-    public void getFilm(String kasta, Film[] arr) {
+    public void getFilm(String tier, Film[] arr) {
         String kelaz[] = new String[arr.length];
         for (int i = 0; i < kelaz.length; i++) {
             kelaz[i] = arr[i].getClass().toString().toLowerCase().replaceAll("class ", "");
         }
-        if (kasta.contains("reg")) {
+        if (tier.contains("reg")) {
             this.akses = new String[arr.length];
             for (int i = 0; i < akses.length; i++) {
                 if (kelaz[i].contains("reg")) {
@@ -29,7 +30,7 @@ public class User {
                     this.akses[i] = null;
                 }
             }
-        } else if (kasta.contains("gold")) {
+        } else if (tier.contains("gold")) {
             this.akses = new String[arr.length];
             for (int i = 0; i < akses.length; i++) {
                 if (kelaz[i].contains("reg") || kelaz[i].contains("baru")) {
@@ -38,7 +39,7 @@ public class User {
                     this.akses[i] = null;
                 }
             }
-        } else if (kasta.contains("plat")) {
+        } else if (tier.contains("plat")) {
             this.akses = new String[arr.length];
             for (int i = 0; i < akses.length; i++) {
                 if (kelaz[i].contains("reg") || kelaz[i].contains("baru") || kelaz[i].contains("ori")) {
@@ -88,8 +89,12 @@ public class User {
         this.status = status;
     }
 
-    public String getKasta() {
-        return kasta;
+    public String getTier() {
+        return tier;
+    }
+
+    public void setTier(String tier){
+        this.tier = tier;
     }
 
     public String[] getHistory() {
@@ -99,25 +104,29 @@ public class User {
     public void setHistory(String[] history) {
         this.history = history;
     }
+
+    public void getFilm(){
+        
+    }
 }
 
-class Regular extends User {
+class Regular extends Pengguna {
     Regular() {
         super();
-        this.kasta = "reguler";
+        this.tier = "reguler";
     }
 }
 
 class Gold extends Regular {
     Gold() {
         super();
-        this.kasta = "gold";
+        this.tier = "gold";
     }
 }
 
 class Platinum extends Gold {
     Platinum() {
         super();
-        this.kasta = "platinum";
+        this.tier = "platinum";
     }
 }

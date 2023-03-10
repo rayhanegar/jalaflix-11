@@ -17,19 +17,19 @@ public class App {
 
         // Why is gitHub so hard maneee
 
-        User u = new Regular();
-        // System.out.println(u.getKasta());
-        u.getFilm(u.getKasta(), m);
+        Pengguna u = new Regular();
+        // System.out.println(u.getTier());
+        u.getFilm(u.getTier(), m);
         System.out.println("---");
 
-        User rich = new Gold();
-        // System.out.println(rich.getKasta());
-        rich.getFilm(rich.getKasta(), m);
+        Pengguna rich = new Gold();
+        // System.out.println(rich.getTier());
+        rich.getFilm(rich.getTier(), m);
         System.out.println("---");
 
-        User bezos = new Platinum();
-        // System.out.println(bezos.getKasta());
-        bezos.getFilm(bezos.getKasta(), m);
+        Pengguna bezos = new Platinum();
+        // System.out.println(bezos.getTier());
+        bezos.getFilm(bezos.getTier(), m);
 
     }
 }
