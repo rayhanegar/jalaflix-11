@@ -1,11 +1,11 @@
-public class Movie {
+public class Film {
     private String judul, genre, sinopsis;
     private int tahun, rating; // rating umur
 
-    Movie() {
+    Film() {
     }
 
-    Movie(String judul, String genre, String sinopsis, int tahun, int rating) {
+    Film(String judul, String genre, String sinopsis, int tahun, int rating) {
         this.judul = judul;
         this.genre = genre;
         this.sinopsis = sinopsis;
@@ -54,7 +54,7 @@ public class Movie {
     }
 }
 
-class Reguler extends Movie {
+class Reguler extends Film {
     Reguler() {
         super();
     }

@@ -1,4 +1,5 @@
 public class User {
+
     protected String kode, nama, telp, kasta; // kasta = reguler, gold, plat
     protected String[] akses;
     protected boolean status;
@@ -14,7 +15,7 @@ public class User {
         this.status = status;
     }
 
-    public void getMovie(String kasta, Movie[] arr) {
+    public void getFilm(String kasta, Film[] arr) {
         String kelaz[] = new String[arr.length];
         for (int i = 0; i < kelaz.length; i++) {
             kelaz[i] = arr[i].getClass().toString().toLowerCase().replaceAll("class ", "");

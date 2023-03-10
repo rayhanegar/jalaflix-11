@@ -1,6 +1,6 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        Movie m[] = new Movie[6];
+        Film m[] = new Film[6];
         m[0] = new Reguler();
         m[1] = new Reguler();
         m[2] = new Baru(); // test
@@ -19,17 +19,17 @@ public class App {
 
         User u = new Regular();
         // System.out.println(u.getKasta());
-        u.getMovie(u.getKasta(), m);
+        u.getFilm(u.getKasta(), m);
         System.out.println("---");
 
         User rich = new Gold();
         // System.out.println(rich.getKasta());
-        rich.getMovie(rich.getKasta(), m);
+        rich.getFilm(rich.getKasta(), m);
         System.out.println("---");
 
         User bezos = new Platinum();
         // System.out.println(bezos.getKasta());
-        bezos.getMovie(bezos.getKasta(), m);
+        bezos.getFilm(bezos.getKasta(), m);
 
     }
 }
