@@ -1,5 +1,8 @@
 public class App {
     public static void main(String[] args) throws Exception {
+        Film db[] = new Film[36]; // 12 reguler, 12 baru, 12 original
+        db[0] = new Reguler(); // untuk database nanti (konstan)
+
         Film m[] = new Film[6];
         m[0] = new Reguler();
         m[1] = new Reguler();

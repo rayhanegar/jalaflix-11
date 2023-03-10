@@ -16,40 +16,38 @@ public class Pengguna {
         this.status = status;
     }
 
-    public void getFilm(String tier, Film[] arr) {
-        String kelaz[] = new String[arr.length];
-        for (int i = 0; i < kelaz.length; i++) {
-            kelaz[i] = arr[i].getClass().toString().toLowerCase().replaceAll("class ", "");
+    public void getFilm(String tier, Film[] db) { // param: tier = user.getTier(), film array dari database
+        String kelaz[] = new String[db.length];
+        for (int i = 0; i < kelaz.length; i++) { // kelaz.length = db.length
+            kelaz[i] = db[i].getClass().toString().toLowerCase().replaceAll("class ", "");
+            // reguler, baru, original
         }
         if (tier.contains("reg")) {
-            this.akses = new String[arr.length];
+            this.akses = new String[db.length];
             for (int i = 0; i < akses.length; i++) {
                 if (kelaz[i].contains("reg")) {
-                    this.akses[i] = arr[i].getJudul();
+                    this.akses[i] = db[i].getJudul();
                 } else {
                     this.akses[i] = null;
                 }
             }
         } else if (tier.contains("gold")) {
-            this.akses = new String[arr.length];
+            this.akses = new String[db.length];
             for (int i = 0; i < akses.length; i++) {
                 if (kelaz[i].contains("reg") || kelaz[i].contains("baru")) {
-                    this.akses[i] = arr[i].getJudul();
+                    this.akses[i] = db[i].getJudul();
                 } else {
                     this.akses[i] = null;
                 }
             }
         } else if (tier.contains("plat")) {
-            this.akses = new String[arr.length];
+            this.akses = new String[db.length];
             for (int i = 0; i < akses.length; i++) {
-                if (kelaz[i].contains("reg") || kelaz[i].contains("baru") || kelaz[i].contains("ori")) {
-                    this.akses[i] = arr[i].getJudul();
-                } else {
-                    this.akses[i] = null;
-                }
+                this.akses[i] = db[i].getJudul(); // all access
             }
         }
 
+        // print ke console
         for (String string : akses) {
             if (!(string == null)) {
                 System.out.println(string);
@@ -93,7 +91,7 @@ public class Pengguna {
         return tier;
     }
 
-    public void setTier(String tier){
+    private void setTier(String tier) {
         this.tier = tier;
     }
 
@@ -105,12 +103,12 @@ public class Pengguna {
         this.history = history;
     }
 
-    public void getFilm(){
+    public void getFilm() {
 
     }
 
-    public void watchFilm(){
-        
+    public void watchFilm() {
+
     }
 }
 
@@ -121,14 +119,14 @@ class Regular extends Pengguna {
     }
 }
 
-class Gold extends Regular {
+class Gold extends Pengguna {
     Gold() {
         super();
         this.tier = "gold";
     }
 }
 
-class Platinum extends Gold {
+class Platinum extends Pengguna {
     Platinum() {
         super();
         this.tier = "platinum";

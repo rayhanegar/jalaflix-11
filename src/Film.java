@@ -60,13 +60,13 @@ class Reguler extends Film {
     }
 }
 
-class Baru extends Reguler {
+class Baru extends Film {
     Baru() {
         super();
     }
 }
 
-class Original extends Baru {
+class Original extends Film {
     Original() {
         super();
     }
