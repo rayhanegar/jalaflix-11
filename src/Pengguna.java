@@ -106,6 +106,10 @@ public class Pengguna {
     }
 
     public void getFilm(){
+
+    }
+
+    public void watchFilm(){
         
     }
 }
