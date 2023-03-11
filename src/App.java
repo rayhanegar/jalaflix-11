@@ -1,6 +1,7 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        Film db[] = new Film[36]; 
+        Film db[] = new Film[36];
+
         //FILM 5 TAHUN LAWAS
         db[0] = new Reguler ("Captain Indonesia", "action", "Seorang pria dari amerika yang berjuang demi menyelamatkan amerika dari serangan alien", 1999, 13); 
         db[1] = new Reguler("Waktu Zuhur", "Drama , Romance", "Kisah dimana seorang pria yang sedang mencari kekasihnya di waktu zuhur", 2012, 13 );
@@ -14,6 +15,7 @@ public class App {
         db[9] = new Reguler("Keluarga Beringin", "Drama , Romance", "Kisah dimana menceritakan keluarga beringin yang dimana anggota keluarganya di tebang untuk membuat furniture yang fantastis", 2016,  13);
         db[10] = new Reguler("Pistol-dalla", "Action", "Kisah dimana bagaimana cara pahlawan kita, Gundalla membuat senjatanya", 2009,  16);
         db[11] = new Reguler("Injustic League", "Action", "Kisah dimana ada sekelompok pahlawan yang sudah letih menjadi pahlawan dan membunuh semua makhluk dimuka bumi ", 2016,  13);
+
         //FILM TERBARU
         db[12] = new Baru ("Atau-nur", "Horror", "Kisah yang melanjutkan kisah Danur yang dimana asih sudah berubah menjadi seorang hantu pria", 2018, 13 );
         db[13] = new Baru ("Laskar Abu-Abu", "Drama, Action", "Kisah dimana sekelompok pemuda yang berusaha untuk sukses tetapi dengan cara yang salah, yaitu dengan menjadi penjual sabu yang sangat sukses", 2019,  8);
@@ -27,6 +29,7 @@ public class App {
         db[21] = new Baru ("Mission Not Impossible", "Action", "Kisah dimana ada seorang penembak jitu yang ingin menyelesaikan misi terakhirnya dengan menggunakan bantuan alien", 2020, 13 );
         db[22] = new Baru ("The King of the Rings", "Fantady Fiction", "Kisah dimana seorang cyborg yang belajar untuk membuat cincin yang sangat OP untuk berkomunikasi dengan malaikat maut agar dapat membunuh orang yang ia mau atas bantuan malaikat maut", 2023, 13 );
         db[23] = new Baru ("The light Knight", "Action", "Kisah dimana seorang pemuda yang sudah berjemur diatas teriknya matahari sehingga ia mampu mengontrol intentensitas cahaya matahari untuk berperang", 2019,  13);
+        
         //FILM ORIGINAL SERIES
         db[24] = new Original("Sawman", "Action, Anime", "Kisah dimana seorang pria dari planet mars yang memiliki misi untuk menebang semua pohon dibumi untuk membuat planet mars menjadi sebuah planet yang indah", 2023,  13);
         db[25] = new Original ("Two Kick Man", "Action", "Kisah dimana ada seorang pahlawan yang dapat mematikan lawannya hanya dengan dua tendangan maut", 2018, 13);
@@ -60,17 +63,21 @@ public class App {
 
         Pengguna u = new Regular();
         // System.out.println(u.getTier());
-        u.getFilm(u.getTier(), m);
+        u.getFilm(u.getTier(), db);
         System.out.println("---");
 
         Pengguna rich = new Gold();
         // System.out.println(rich.getTier());
-        rich.getFilm(rich.getTier(), m);
+        rich.getFilm(rich.getTier(), db);
         System.out.println("---");
 
         Pengguna bezos = new Platinum();
         // System.out.println(bezos.getTier());
-        bezos.getFilm(bezos.getTier(), m);
-
+        bezos.getFilm(bezos.getTier(), db);
+        bezos.watchFilm(10);
+        bezos.watchFilm(15);
+        bezos.watchFilm(3);
+        bezos.watchFilm(12);
+        bezos.getHistory();
     }
 }

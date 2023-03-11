@@ -60,6 +60,7 @@ class Reguler extends Film {
     }
 
     public Reguler(String string, String string2, String string3, int i, int j) {
+        super(string, string2, string3, i, j);
     }
 }
 
@@ -69,6 +70,7 @@ class Baru extends Film {
     }
 
     public Baru(String string, String string2, String string3, int i, int j) {
+        super(string, string2, string3, i, j);
     }
 }
 
@@ -78,5 +80,6 @@ class Original extends Film {
     }
 
     public Original(String string, String string2, String string3, int i, int j) {
+        super(string, string2, string3, i, j);
     }
 }
