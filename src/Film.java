@@ -58,16 +58,25 @@ class Reguler extends Film {
     Reguler() {
         super();
     }
+
+    public Reguler(String string, String string2, String string3, int i, int j) {
+    }
 }
 
 class Baru extends Film {
     Baru() {
         super();
     }
+
+    public Baru(String string, String string2, String string3, int i, int j) {
+    }
 }
 
 class Original extends Film {
     Original() {
         super();
+    }
+
+    public Original(String string, String string2, String string3, int i, int j) {
     }
 }
