@@ -11,7 +11,7 @@ public class App {
         db[6] = new Reguler("Sepuluh Garis Biru", "Drama", "Kisah dimana ada seorang pemuda yang tidak sengaja membuat karya dengan 10 garis berwarna biru, yang membuatnya sukses", 2012,  13);
         db[7] = new Reguler("My Smart Boss", "Drama", "Kisah dimana seorang wanita tua yang memiliki boss yang pintar sehingga membuat wanita itu sukses dunia akhirat", 2017, 13 );
         db[8] = new Reguler("Warteg DKI", "Drama", "Kisah dimana ada warteg yang berlokasi di Jakarta yang sedikit demi sedikit mulai terkenal di seluruh bagian Bimasakti",2012 ,  13);
-        db[9] = new Reguler("Keluarga Beringin", "Drama , Romance", "Kisah dimana menceritakan keluarga beringin yang dimana anggota keluarganya di tebang untuk membuat furniture yang fantastis", 2016,  );
+        db[9] = new Reguler("Keluarga Beringin", "Drama , Romance", "Kisah dimana menceritakan keluarga beringin yang dimana anggota keluarganya di tebang untuk membuat furniture yang fantastis", 2016,  13);
         db[10] = new Reguler("Pistol-dalla", "Action", "Kisah dimana bagaimana cara pahlawan kita, Gundalla membuat senjatanya", 2009,  16);
         db[11] = new Reguler("Injustic League", "Action", "Kisah dimana ada sekelompok pahlawan yang sudah letih menjadi pahlawan dan membunuh semua makhluk dimuka bumi ", 2016,  13);
         //FILM TERBARU
@@ -20,7 +20,7 @@ public class App {
         db[14] = new Baru ("Mengembalikan Raden Saleh", "Action", "Kisah dimana seorang pencuri yang sudah tobat dalam hal mencuri dan ingin mengembalikan lukisan Raden Saleh", 2020, 13 );
         db[15] = new Baru ("Prissonlangkung", "Horror", "Kisah dimana seorang pemuda yang melakukan investigasi dalam sebuah penjara dan bertemu dengan hantu yang disebut dengan PrissonLangkung", 2018,  13);
         db[16] = new Baru ("Good Boys", "Action", "Kisah dimana sekelompok pria paruh baya yang sudah taubat nasuha dan menjadi sekelompok orang yang akan menyelamatkan bumi dari serangan mafia intergalaksi", 2019,  13);
-        db[17] = new Baru ("Jamal Potter", "Action", "Kisah dimana ada seorang pemuda yang berubah menjadi orang kafir dengan mempelajari ilmu sihir dan memiliki motivasi untuk melakukan muggen sukoyomi", ,  );
+        db[17] = new Baru ("Jamal Potter", "Action", "Kisah dimana ada seorang pemuda yang berubah menjadi orang kafir dengan mempelajari ilmu sihir dan memiliki motivasi untuk melakukan muggen sukoyomi", 2021,  13);
         db[18] = new Baru ("Slow Furrious", "Action ", "Kisah dimana ada seorang mekanik yang ingin membuat sebuah mobil sebuah mobil yang lambat tetapi memiliki daya serang yang kuat untuk melindungi negaranya", 2023, 13 ); 
         db[19] = new Baru ("Ready Player Two", "Science Fiction, Action", "Kisah dimana seorang pria paruh baya yang masuk kedalam game perang yang dimana dia harus menyelesaikan game tersebut", 2022,  13);
         db[20] = new Baru ("Outerstellar", "Science Fiction, Mystery", "Kisah dimana sekelompok pemuda gila yang sedang menjelajahi langit dan berperang dengan alien", 2020,  13);
