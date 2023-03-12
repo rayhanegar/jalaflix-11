@@ -1,6 +1,14 @@
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) throws Exception {
         Film db[] = new Film[36];
+        int exit = 0;
+        int response;
+
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+                                     JalaFlix                                            +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         //FILM 5 TAHUN LAWAS
         db[0] = new Reguler ("Captain Indonesia", "action", "Seorang pria dari amerika yang berjuang demi menyelamatkan amerika dari serangan alien", 1999, 13); 
@@ -44,40 +52,71 @@ public class App {
         db[34] = new Original ("Deffend on Titan", "Action, Anime", "Kisah dimana sekelompok manusia kerdil yang berjuang untuk melindungi manusia raksasa", 2021,  13);
         db[35] = new Original ("Attack on Dwarf", "Action, Anime", "Kisah dimana seluruh manusia raksasa yang melindungi kaumnya dari serangan manusia kerdil yang memiliki kekuatan dua kali manusia raksasa", 2011,  17);
 
-        Film m[] = new Film[6];
-        m[0] = new Reguler();
-        m[1] = new Reguler();
-        m[2] = new Baru(); // test
-        m[3] = new Baru(); // ini perubahan
-        m[4] = new Original(); // dari hugo
-        m[5] = new Original();
+        do{
+            System.out.println("Menu: ");
+            System.out.println("1. Tonton Film");
+            System.out.println("2. Lihat History");
+            System.out.println("3. lihat Detail Pengguna");
+            System.out.println("4. Daftar Menjadi Pengguna");
+            System.out.println("5. Keluar dari JalaFlix");
+            System.out.print("Response [1/2/3/4/5]: ");
 
-        m[0].setJudul("apa");
-        m[1].setJudul("kapan"); // P
-        m[2].setJudul("siapa");
-        m[3].setJudul("bagaimana"); // aku tambahin komen di sini
-        m[4].setJudul("mengapa");
-        m[5].setJudul("di mana");// ini dri hasan
+            Scanner sc = new Scanner(System.in);
+            response = sc.nextInt();
+            System.out.println();
 
-        // Why is gitHub so hard maneee
+            // Jika pengguna input 1 -> Tonton Film
+            if (response == 1){
+                System.out.print("Masukkan index pengguna anda dalam dbPengguna: ");
+                int index = sc.nextInt();
+                if(Pengguna.dbPengguna[index] != null){
+                    Pengguna.dbPengguna[index].getFilm(Pengguna.dbPengguna[index].getTier(), db);
+                    int response2;
+                    do{
+                        System.out.print("Tonton film nomor berapa: ");
+                        response2 = sc.nextInt();
+                        Pengguna.dbPengguna[index].watchFilm(response2);
+                        System.out.println("Masih ingin menonton?");
+                        System.out.println("1. Ya\n2. Tidak");
+                        System.out.print("Response [1/2]: ");
+                        response2 = sc.nextInt();
+                        System.out.println();
+                    } while (response2 == 1);
+                } else {
+                    System.out.println("Belum ada pengguna yang terdaftar dengan index tersebut.");
+                    System.out.println("Silakan lakukan registrasi pengguna terlebih dahulu.");
+                    System.out.println();
+                }
+            }
 
-        Pengguna u = new Regular();
-        // System.out.println(u.getTier());
-        u.getFilm(u.getTier(), db);
-        System.out.println("---");
+            // Jika pengguna input 2 -> Buka history
+            else if (response == 2){
+                System.out.println("Masukkan index pengguna anda dalam dbPengguna: ");
+                int index = sc.nextInt();
+                Pengguna.dbPengguna[index].getHistory();
+                System.out.println();
+            }
 
-        Pengguna rich = new Gold();
-        // System.out.println(rich.getTier());
-        rich.getFilm(rich.getTier(), db);
-        System.out.println("---");
+            // Jika pengguna input 3 -> Tampilkan informasi akun
+            else if (response == 3){
+                System.out.println("Masukkan index pengguna anda dalam dbPengguna: ");
+                int index = sc.nextInt();
+                Pengguna.dbPengguna[index].accInfo();
+                System.out.println();
+            }
 
-        Pengguna bezos = new Platinum();
-        // System.out.println(bezos.getTier());
-        bezos.getFilm(bezos.getTier(), db);
-        bezos.watchFilm(10);
-        bezos.watchFilm(15);
-        bezos.watchFilm(3);
-        bezos.watchFilm(12);
-        bezos.getHistory();
+            // Jika pengguna input 4 -> Daftarkan pengguna baru
+            else if (response == 4){
+                Pengguna.createAcc();
+                System.out.println();
+            }
+
+            else if (response == 5){
+                System.out.println();
+                System.out.println("Terima kasih telah menggunakan layanan JalaFlix!");
+                exit = 1;
+            }
+
+        } while (exit == 0);
     }
 }
