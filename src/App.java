@@ -200,7 +200,8 @@ public class App {
                 System.out.print("Masukkan index pengguna anda dalam dbPengguna: ");
                 int index = sc.nextInt();
                 if (Pengguna.dbPengguna[index] != null) {
-                    Pengguna.dbPengguna[index].upgrade();
+                    Pengguna.dbPengguna[index].upgrade(Pengguna.dbPengguna[index].getKode(),
+                            Pengguna.dbPengguna[index].getNama(), Pengguna.dbPengguna[index].getTelp());
                 } else {
                     System.out.println("Belum ada pengguna yang terdaftar dengan index tersebut.");
                     System.out.println("Silakan lakukan registrasi pengguna terlebih dahulu.");

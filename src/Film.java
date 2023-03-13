@@ -55,31 +55,19 @@ public class Film {
 }
 
 class Reguler extends Film {
-    Reguler() {
-        super();
-    }
-
-    public Reguler(String string, String string2, String string3, int i, int j) {
-        super(string, string2, string3, i, j);
+    public Reguler(String judul, String genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
     }
 }
 
 class Baru extends Film {
-    Baru() {
-        super();
-    }
-
-    public Baru(String string, String string2, String string3, int i, int j) {
-        super(string, string2, string3, i, j);
+    public Baru(String judul, String genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
     }
 }
 
 class Original extends Film {
-    Original() {
-        super();
-    }
-
-    public Original(String string, String string2, String string3, int i, int j) {
-        super(string, string2, string3, i, j);
+    public Original(String judul, String genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
     }
 }

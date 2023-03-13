@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Pengguna {
-    static Pengguna[] dbPengguna = new Pengguna[100];
+    public static Pengguna[] dbPengguna = new Pengguna[100];
     private static int count = 0;
     private String kode, telp;
     protected String nama, tier; // tier = reguler, gold, plat
@@ -43,6 +43,7 @@ public class Pengguna {
 
         String tier;
         switch (response) {
+<<<<<<< Updated upstream
             case 1 -> {
                 tier = "Regular";
                 dbPengguna[count++] = new Regular();
@@ -53,6 +54,18 @@ public class Pengguna {
             }
             default -> {
                 tier = "Platinum";
+=======
+            case 1:
+                tier = "reguler";
+                dbPengguna[count++] = new Regular();
+                break;
+            case 2:
+                tier = "gold";
+                dbPengguna[count++] = new Gold();
+                break;
+            default:
+                tier = "platinum";
+>>>>>>> Stashed changes
                 dbPengguna[count++] = new Platinum();
             }
         }
@@ -68,14 +81,15 @@ public class Pengguna {
         System.out.println();
     }
 
-    public void getFilm(String tier, Film[] db) { // param: tier = user.getTier(), film array dari database
+    public void getFilm(String tier, Film[] db) { // param: tier = user.getTier(), film array
+                                                  // dari database
     }
 
     public String getKode() {
         return kode;
     }
 
-    public void setKode(String kode) {
+    private void setKode(String kode) {
         this.kode = kode;
     }
 
@@ -228,8 +242,10 @@ public class Pengguna {
                 "---------------------------------------------------------------------------------------------------------");
     }
 
-    public void upgrade() {
+    public void upgrade(String kode, String nama, String telp) {
         Scanner sc = new Scanner(System.in);
+
+        String tempKode = kode, tempNama = nama, tempTelp = telp;
 
         System.out.println();
 
@@ -240,18 +256,32 @@ public class Pengguna {
         System.out.println();
 
         switch (response) {
+<<<<<<< Updated upstream
             case 1 -> tier = "Regular";
             case 2 -> tier = "Gold";
             case 3 -> tier = "Platinum";
             default -> tier = "Platinum";
+=======
+            case 1:
+                tier = "reguler";
+                break;
+            case 2:
+                tier = "gold";
+                break;
+            case 3:
+                tier = "platinum";
+                break;
+            default:
+                tier = "platinum";
+>>>>>>> Stashed changes
         }
 
         String nominal = "Rp00,000.00";
 
         switch (tier) {
-            case "Regular" -> nominal = "Rp30,000.00";
-            case "Gold" -> nominal = "Rp50,000.00";
-            case "Platinum" -> nominal = "Rp80,000.00";
+            case "reguler" -> nominal = "Rp30,000.00";
+            case "gold" -> nominal = "Rp50,000.00";
+            case "platinum" -> nominal = "Rp80,000.00";
         }
 
         System.out.println(
@@ -271,15 +301,28 @@ public class Pengguna {
                 "\n---------------------------------------------------------------------------------------------------------");
 
         if (response2.equals("ya")) {
-            this.statusActive = true;
-            System.out.println();
-            System.out.println("Pembayaran anda terkonfirmasi!");
-            setTier(tier);
-            System.out.println("Nama: " + this.nama);
-            System.out.println("ID  : " + this.getKode());
-            System.out.println("Tier: " + tier);
-            System.out.println("Nikmati katalog film-film pilihan JalaFlix selama 30 hari ke depan.");
+            switch (response) {
+                case 1:
+                    tier = "reguler";
+                    dbPengguna[count++] = new Regular();
+                    break;
+                case 2:
+                    tier = "gold";
+                    dbPengguna[count++] = new Gold();
+                    break;
+                default:
+                    tier = "platinum";
+                    dbPengguna[count++] = new Platinum();
+            }
 
+            dbPengguna[count - 1].setKode(tempKode);
+            dbPengguna[count - 1].setNama(tempNama);
+            dbPengguna[count - 1].setTelp(tempTelp);
+            dbPengguna[count - 1].setTier(tier);
+            dbPengguna[count - 1].setstatusActive(true);
+
+            System.out.println("Selamat status keanggotaan anda sudah aktif!");
+            System.out.printf("Gunakan dbPengguna[%d] sebagai metode akses akun ini.\n", count - 1);
             System.out.println();
         } else {
             this.statusActive = false;
@@ -331,7 +374,8 @@ class Regular extends Pengguna {
         for (Film i : akses) {
             if (i != null) {
                 System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
-                        i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 45)), i.getTahun(),
+                        i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."),
+                        i.getTahun(),
                         i.getRating());
             }
 
@@ -359,7 +403,8 @@ class Gold extends Pengguna {
         }
         akses = new Film[db.length];
         for (int i = 0; i < db.length; i++) {
-            if (db[i].getClass().toString().contains("Reg") || db[i].getClass().toString().contains("Baru")) {
+            if ((db[i].getClass().toString().contains("Reg")
+                    || db[i].getClass().toString().contains("Baru"))) {
                 akses[i] = db[i];
             }
         }
@@ -384,7 +429,8 @@ class Gold extends Pengguna {
         for (Film i : akses) {
             if (i != null) {
                 System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
-                        i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 45)), i.getTahun(),
+                        i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."),
+                        i.getTahun(),
                         i.getRating());
             }
         }
@@ -430,11 +476,13 @@ class Platinum extends Pengguna {
 
         for (Film i : db) {
             System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
-                    i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 45)), i.getTahun(), i.getRating());
+                    i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."), i.getTahun(),
+                    i.getRating());
         }
 
         System.out.println(
                 "|===================================================================================================================================|");
         System.out.println();
+
     }
 }
