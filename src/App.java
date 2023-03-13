@@ -122,17 +122,32 @@ public class App {
                 2011, 17);
 
         do {
-            System.out.println("Menu: ");
-            System.out.println("1. Tonton Film");
-            System.out.println("2. Lihat History");
-            System.out.println("3. lihat Detail Pengguna");
-            System.out.println("4. Daftar Menjadi Pengguna");
-            System.out.println("5. Upgrade Langganan");
-            System.out.println("6. Keluar dari JalaFlix");
-            System.out.print("Response [1/2/3/4/5/6]: ");
-
             Scanner sc = new Scanner(System.in);
-            response = sc.nextInt();
+
+            if (Pengguna.getCount() == 0) {
+                System.out.println("Menu: ");
+                System.out.println("1. Daftar Menjadi Pengguna");
+                System.out.println("2. Keluar dari JalaFlix");
+                System.out.print("Response [1/2]: ");
+                response = sc.nextInt();
+                if (response == 1) {
+                    response = 4;
+                } else {
+                    response = 6;
+                }
+
+            } else {
+                System.out.println("Menu: ");
+                System.out.println("1. Tonton Film");
+                System.out.println("2. Lihat History");
+                System.out.println("3. lihat Detail Pengguna");
+                System.out.println("4. Daftar Menjadi Pengguna");
+                System.out.println("5. Upgrade Langganan");
+                System.out.println("6. Keluar dari JalaFlix");
+                System.out.print("Response [1/2/3/4/5/6]: ");
+                response = sc.nextInt();
+            }
+
             System.out.println();
 
             // Jika pengguna input 1 -> Tonton Film

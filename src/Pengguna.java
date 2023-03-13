@@ -21,6 +21,10 @@ public class Pengguna {
         this.statusActive = statusActive;
     }
 
+    public static int getCount() {
+        return count;
+    }
+
     public static void createAcc() {
 
         Scanner sc = new Scanner(System.in);
