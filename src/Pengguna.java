@@ -43,17 +43,18 @@ public class Pengguna {
 
         String tier;
         switch (response) {
-            case 1:
+            case 1 -> {
                 tier = "Regular";
                 dbPengguna[count++] = new Regular();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 tier = "Gold";
                 dbPengguna[count++] = new Gold();
-                break;
-            default:
+            }
+            default -> {
                 tier = "Platinum";
                 dbPengguna[count++] = new Platinum();
+            }
         }
 
         dbPengguna[count - 1].setKode(kode);
@@ -150,9 +151,9 @@ public class Pengguna {
     public void watchFilm(int i) {
         if (akses != null) {
             if (akses[i] != null) {
-                System.out.printf("Now playing: \"%s\"\n", akses[i].getJudul());
-                setHistory(akses[i]);
-                System.out.printf("Adding \"%s\" to your watch history!\n", akses[i].getJudul());
+                System.out.printf("Now playing: \"%s\"\n", akses[i-1].getJudul());
+                setHistory(akses[i-1]);
+                System.out.printf("Adding \"%s\" to your watch history!\n", akses[i-1].getJudul());
                 System.out.println();
             } else {
                 System.out.println("Maaf, tidak ada data tersedia untuk film ini.");
@@ -164,7 +165,7 @@ public class Pengguna {
     }
 
     public boolean isActive() {
-        return (statusActive == true);
+        return (statusActive);
     }
 
     public void bayar() { // Buat bayar tagihan, bakal set statusActive ke true jika pembayaran berhasil
@@ -193,7 +194,7 @@ public class Pengguna {
         System.out.println(
                 "---------------------------------------------------------------------------------------------------------");
         System.out.println("Nomor rekening Virtual Account: 14000212323 (Bank Mandiri)");
-        System.out.printf("Lanjut bayar [ya/tidak]: ");
+        System.out.print("Lanjut bayar [ya/tidak]: ");
         String response = sc.next();
         System.out.println(
                 "\n---------------------------------------------------------------------------------------------------------");
@@ -233,23 +234,16 @@ public class Pengguna {
         System.out.println();
 
         System.out.println("Tier apa yang anda ingin pilih?");
-        System.out.printf("1. Regular\n2. Gold\n3. Platinum\n");
+        System.out.print("1. Regular\n2. Gold\n3. Platinum\n");
         System.out.print("Pilihan Tier[1/2/3]: ");
         int response = sc.nextInt();
         System.out.println();
 
         switch (response) {
-            case 1:
-                tier = "Regular";
-                break;
-            case 2:
-                tier = "Gold";
-                break;
-            case 3:
-                tier = "Platinum";
-                break;
-            default:
-                tier = "Platinum";
+            case 1 -> tier = "Regular";
+            case 2 -> tier = "Gold";
+            case 3 -> tier = "Platinum";
+            default -> tier = "Platinum";
         }
 
         String nominal = "Rp00,000.00";
