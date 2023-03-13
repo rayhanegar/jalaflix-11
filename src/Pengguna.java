@@ -43,18 +43,6 @@ public class Pengguna {
 
         String tier;
         switch (response) {
-<<<<<<< Updated upstream
-            case 1 -> {
-                tier = "Regular";
-                dbPengguna[count++] = new Regular();
-            }
-            case 2 -> {
-                tier = "Gold";
-                dbPengguna[count++] = new Gold();
-            }
-            default -> {
-                tier = "Platinum";
-=======
             case 1:
                 tier = "reguler";
                 dbPengguna[count++] = new Regular();
@@ -65,9 +53,8 @@ public class Pengguna {
                 break;
             default:
                 tier = "platinum";
->>>>>>> Stashed changes
                 dbPengguna[count++] = new Platinum();
-            }
+
         }
 
         dbPengguna[count - 1].setKode(kode);
@@ -165,9 +152,9 @@ public class Pengguna {
     public void watchFilm(int i) {
         if (akses != null) {
             if (akses[i] != null) {
-                System.out.printf("Now playing: \"%s\"\n", akses[i-1].getJudul());
-                setHistory(akses[i-1]);
-                System.out.printf("Adding \"%s\" to your watch history!\n", akses[i-1].getJudul());
+                System.out.printf("Now playing: \"%s\"\n", akses[i - 1].getJudul());
+                setHistory(akses[i - 1]);
+                System.out.printf("Adding \"%s\" to your watch history!\n", akses[i - 1].getJudul());
                 System.out.println();
             } else {
                 System.out.println("Maaf, tidak ada data tersedia untuk film ini.");
@@ -256,12 +243,6 @@ public class Pengguna {
         System.out.println();
 
         switch (response) {
-<<<<<<< Updated upstream
-            case 1 -> tier = "Regular";
-            case 2 -> tier = "Gold";
-            case 3 -> tier = "Platinum";
-            default -> tier = "Platinum";
-=======
             case 1:
                 tier = "reguler";
                 break;
@@ -273,7 +254,6 @@ public class Pengguna {
                 break;
             default:
                 tier = "platinum";
->>>>>>> Stashed changes
         }
 
         String nominal = "Rp00,000.00";
