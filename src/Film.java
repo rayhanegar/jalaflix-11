@@ -1,3 +1,9 @@
+class TahunTooOldException extends Exception {
+    public TahunTooOldException(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+}
+
 public class Film {
     private String judul, genre, sinopsis;
     private int tahun, rating; // rating umur
@@ -9,7 +15,17 @@ public class Film {
         this.judul = judul;
         this.genre = genre;
         this.sinopsis = sinopsis;
-        this.tahun = tahun;
+        try {
+            if (tahun < 1800) {
+                throw new TahunTooOldException(
+                        "[ERROR] Film terlalu tua. Kondisi ini dapat menyebabkan film tidak direkomendasikan kepada pengguna. Input tahun dianulir.");
+            } else {
+                this.tahun = tahun;
+            }
+        } catch (TahunTooOldException t) {
+            this.tahun = 0;
+        }
+
         this.rating = rating;
     }
 

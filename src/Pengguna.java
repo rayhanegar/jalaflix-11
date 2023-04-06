@@ -1,10 +1,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+class UmurNegatifException extends Exception {
+    public UmurNegatifException(String errorMessage) {
+        Pengguna.check = 0;
+        System.out.println(errorMessage);
+    }
+}
+
 public class Pengguna extends Pelanggan implements UserMethods {
     public static Pengguna[] dbPengguna = new Pengguna[100];
+    static int check = 0;
     private static int count = 0;
     private String kode, telp;
+    private int umur;
     protected String nama, tier; // tier = reguler, gold, plat
     protected Film[] akses;
     protected boolean statusActive; // active or no
@@ -13,9 +22,10 @@ public class Pengguna extends Pelanggan implements UserMethods {
     Pengguna() {
     }
 
-    Pengguna(String kode, String nama, String telp, String tier, boolean statusActive) {
+    Pengguna(String kode, String nama, int umur, String telp, String tier, boolean statusActive) {
         this.kode = kode;
         this.nama = nama;
+        this.umur = umur;
         this.telp = telp;
         this.tier = tier;
         this.statusActive = statusActive;
@@ -31,13 +41,30 @@ public class Pengguna extends Pelanggan implements UserMethods {
         System.out.println("Pendaftaran akun baru JalaFlix");
         System.out.print("Nama      : ");
         String nama = sc.nextLine();
+        int umur = 0;
+        while (check == 0) {
+            System.out.print("Umur      : ");
+            try {
+                umur = Integer.parseInt(sc.nextLine().replaceAll("[^0-9\\-]", "0"));
+                if (umur < 0) {
+                    throw new UmurNegatifException("[ERROR] Umur tidak boleh negatif. Silahkan input ulang.");
+                } else {
+                    break;
+                }
+            } catch (UmurNegatifException u) {
+                continue;
+            }
+        }
+
         System.out.print("Telepon   : ");
-        String telp = sc.nextLine();
+
+        String telp = sc
+                .nextLine();
         System.out.println("Silakan pilih Tier keanggotaan JalaFlix");
         System.out.println(
                 "1. Regular (Rp30,000.00/bulan)\n2. Gold (Rp50,000.00/bulan)\n3. Platinum (Rp80,000.00/bulan)");
         System.out.print("Pilihan Tier[1/2/3]: ");
-        int response = sc.nextInt();
+        int response = Integer.parseInt(sc.nextLine().replaceAll("[^0-9]", "0"));
         System.out.println();
 
         String tier;
@@ -58,6 +85,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
 
         dbPengguna[count - 1].setKode(kode);
         dbPengguna[count - 1].setNama(nama);
+        dbPengguna[count - 1].setUmur(umur);
         dbPengguna[count - 1].setTelp(telp);
         dbPengguna[count - 1].setTier(tier);
         dbPengguna[count - 1].setstatusActive(true);
@@ -65,7 +93,6 @@ public class Pengguna extends Pelanggan implements UserMethods {
         System.out.println("Selamat status keanggotaan anda sudah aktif!");
         System.out.printf("Gunakan dbPengguna[%d] sebagai metode akses akun ini.\n", count - 1);
         System.out.println();
-        sc.close();
     }
 
     public void getFilm(String tier, Film[] db) { // param: tier = user.getTier(), film array
@@ -84,7 +111,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         return nama;
     }
 
-    public void setNama(String nama) {
+    private void setNama(String nama) {
         this.nama = nama;
     }
 
@@ -92,7 +119,15 @@ public class Pengguna extends Pelanggan implements UserMethods {
         return telp;
     }
 
-    public void setTelp(String telp) {
+    private void setUmur(int umur) {
+        this.umur = umur;
+    }
+
+    public String getUmur() {
+        return telp;
+    }
+
+    private void setTelp(String telp) {
         this.telp = telp;
     }
 
@@ -169,7 +204,6 @@ public class Pengguna extends Pelanggan implements UserMethods {
         Scanner sc = new Scanner(System.in);
         if (statusActive) {
             System.out.println("Status akun anda untuk bulan ini sudah aktif!");
-            sc.close();
             return;
         }
         String nominal = "Rp00,000.00";
@@ -211,7 +245,6 @@ public class Pengguna extends Pelanggan implements UserMethods {
             System.out.println("Silakan ulangi pembayaran atau hubungi Customer Service kami di (0341) 333-4444");
             System.out.println();
         }
-        sc.close();
     }
 
     public void accInfo() {
@@ -219,6 +252,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
                 "---------------------------------------------------------------------------------------------------------");
         System.out.println("Informasi akun dengan ID " + this.kode);
         System.out.println("Nama            : " + nama);
+        System.out.println("Umur            : " + umur);
         System.out.println("Tier            : " + tier);
         System.out.println("Telepon         : " + telp);
         System.out.println("Status Aktif    : " + statusActive);
@@ -307,7 +341,6 @@ public class Pengguna extends Pelanggan implements UserMethods {
             System.out.println("Silakan ulangi pembayaran atau hubungi Customer Service kami di (0341) 333-4444");
             System.out.println();
         }
-        sc.close();
     }
 }
 
@@ -349,7 +382,7 @@ class Regular extends Pengguna {
         int j = 1;
 
         for (Film i : akses) {
-            if (i != null) {
+            if (i != null && i.getTahun() > 1800) {
                 System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
                         i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."),
                         i.getTahun(),
@@ -404,7 +437,7 @@ class Gold extends Pengguna {
         int j = 1;
 
         for (Film i : akses) {
-            if (i != null) {
+            if (i != null && i.getTahun() > 1800) {
                 System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
                         i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."),
                         i.getTahun(),
@@ -452,9 +485,12 @@ class Platinum extends Pengguna {
         int j = 1;
 
         for (Film i : db) {
-            System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
-                    i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."), i.getTahun(),
-                    i.getRating());
+            if (i.getTahun() > 1800) {
+                System.out.printf("| %-4d | %-30s | %-25s | %-45s | %-4d | %-6d |\n", j++, i.getJudul(), i.getGenre(),
+                        i.getSinopsis().substring(0, Math.min(i.getSinopsis().length(), 42)).concat("..."),
+                        i.getTahun(),
+                        i.getRating());
+            }
         }
 
         System.out.println(

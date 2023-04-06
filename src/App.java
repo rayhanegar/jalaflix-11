@@ -144,7 +144,7 @@ public class App {
                 System.out.println("1. Daftar Menjadi Pengguna");
                 System.out.println("2. Keluar dari JalaFlix");
                 System.out.print("Response [1/2]: ");
-                response = sc.nextInt();
+                response = Integer.parseInt(sc.nextLine().replaceAll("[^0-9]", "0"));
                 if (response == 1) {
                     response = 4;
                 } else {
@@ -160,7 +160,8 @@ public class App {
                 System.out.println("5. Upgrade Langganan");
                 System.out.println("6. Keluar dari JalaFlix");
                 System.out.print("Response [1/2/3/4/5/6]: ");
-                response = sc.nextInt();
+                int temp = Integer.parseInt(sc.nextLine().replaceAll("[^0-9]", "0"));
+                response = temp;
             }
 
             System.out.println();
