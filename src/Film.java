@@ -13,6 +13,14 @@ public class Film {
         this.rating = rating;
     }
 
+    Film(String judul, Genre genre, String sinopsis, int tahun, int rating) {
+        this.judul = judul;
+        this.genre = genre.getGenre();
+        this.sinopsis = sinopsis;
+        this.tahun = tahun;
+        this.rating = rating;
+    }
+
     public String getJudul() {
         return judul;
     }
@@ -58,16 +66,28 @@ class Reguler extends Film {
     public Reguler(String judul, String genre, String sinopsis, int tahun, int rating) {
         super(judul, genre, sinopsis, tahun, rating);
     }
+
+    public Reguler(String judul, Genre genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
+    }
 }
 
 class Baru extends Film {
     public Baru(String judul, String genre, String sinopsis, int tahun, int rating) {
         super(judul, genre, sinopsis, tahun, rating);
     }
+
+    public Baru(String judul, Genre genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
+    }
 }
 
 class Original extends Film {
     public Original(String judul, String genre, String sinopsis, int tahun, int rating) {
+        super(judul, genre, sinopsis, tahun, rating);
+    }
+
+    public Original(String judul, Genre genre, String sinopsis, int tahun, int rating) {
         super(judul, genre, sinopsis, tahun, rating);
     }
 }
