@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Pengguna {
+public class Pengguna extends Pelanggan {
     public static Pengguna[] dbPengguna = new Pengguna[100];
     private static int count = 0;
     private String kode, telp;
@@ -26,7 +26,6 @@ public class Pengguna {
     }
 
     public static void createAcc() {
-
         Scanner sc = new Scanner(System.in);
         String kode = Integer.toString((int) (Math.random() * 1000000));
         System.out.println("Pendaftaran akun baru JalaFlix");
@@ -66,6 +65,7 @@ public class Pengguna {
         System.out.println("Selamat status keanggotaan anda sudah aktif!");
         System.out.printf("Gunakan dbPengguna[%d] sebagai metode akses akun ini.\n", count - 1);
         System.out.println();
+        sc.close();
     }
 
     public void getFilm(String tier, Film[] db) { // param: tier = user.getTier(), film array
@@ -145,10 +145,6 @@ public class Pengguna {
         history.add(recent);
     }
 
-    public void getFilm() {
-        // Method ini di override di tiap-tiap subclass
-    }
-
     public void watchFilm(int i) {
         if (akses != null) {
             if (akses[i] != null) {
@@ -170,10 +166,10 @@ public class Pengguna {
     }
 
     public void bayar() { // Buat bayar tagihan, bakal set statusActive ke true jika pembayaran berhasil
-
         Scanner sc = new Scanner(System.in);
         if (statusActive) {
             System.out.println("Status akun anda untuk bulan ini sudah aktif!");
+            sc.close();
             return;
         }
         String nominal = "Rp00,000.00";
@@ -215,6 +211,7 @@ public class Pengguna {
             System.out.println("Silakan ulangi pembayaran atau hubungi Customer Service kami di (0341) 333-4444");
             System.out.println();
         }
+        sc.close();
     }
 
     public void accInfo() {
@@ -310,7 +307,7 @@ public class Pengguna {
             System.out.println("Silakan ulangi pembayaran atau hubungi Customer Service kami di (0341) 333-4444");
             System.out.println();
         }
-
+        sc.close();
     }
 }
 

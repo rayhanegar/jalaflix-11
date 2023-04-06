@@ -6,16 +6,17 @@ public class App {
         int exit = 0;
         int response;
 
-        System.out
-                .println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out
-                .println("+                                     JalaFlix                                            +");
-        System.out
-                .println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(
+                "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(
+                "+                                     JalaFlix                                            +");
+        System.out.println(
+                "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         // FILM 5 TAHUN LAWAS
         db[0] = new Reguler("Captain Indonesia", "action",
-                "Seorang pria dari amerika yang berjuang demi menyelamatkan amerika dari serangan alien", 1999, 13);
+                "Seorang pria dari amerika yang berjuang demi menyelamatkan amerika dari serangan alien",
+                1999, 13);
         db[1] = new Reguler("Waktu Zuhur", "Drama , Romance",
                 "Kisah dimana seorang pria yang sedang mencari kekasihnya di waktu zuhur", 2012, 13);
         db[2] = new Reguler("Nurse Strange", "Action",
@@ -24,7 +25,8 @@ public class App {
         db[3] = new Reguler("Kukira Kau Hotel", "Drama , Romance",
                 "Kisah cinta seorang pria yang menemukan cinta sejatinya di hotel", 2011, 16);
         db[4] = new Reguler("Filosofi Teh", "Drama",
-                "Kisah dimana seorang pria yang mabuk teh hingga menjadi seorang entrepreneur yang sukses", 2001, 13);
+                "Kisah dimana seorang pria yang mabuk teh hingga menjadi seorang entrepreneur yang sukses",
+                2001, 13);
         db[5] = new Reguler("Kuntil-Bapak", "Horror",
                 "Kisah dimana ada seorang pemuda yang tidak sengaja membangkitkan hantu yang bernama Kuntil-bapak",
                 1998, 13);
@@ -48,7 +50,8 @@ public class App {
 
         // FILM TERBARU
         db[12] = new Baru("Atau-nur", "Horror",
-                "Kisah yang melanjutkan kisah Danur yang dimana asih sudah berubah menjadi seorang hantu pria", 2018,
+                "Kisah yang melanjutkan kisah Danur yang dimana asih sudah berubah menjadi seorang hantu pria",
+                2018,
                 13);
         db[13] = new Baru("Laskar Abu-Abu", "Drama, Action",
                 "Kisah dimana sekelompok pemuda yang berusaha untuk sukses tetapi dengan cara yang salah, yaitu dengan menjadi penjual sabu yang sangat sukses",
@@ -72,7 +75,8 @@ public class App {
                 "Kisah dimana seorang pria paruh baya yang masuk kedalam game perang yang dimana dia harus menyelesaikan game tersebut",
                 2022, 13);
         db[20] = new Baru("Outerstellar", "Science Fiction, Mystery",
-                "Kisah dimana sekelompok pemuda gila yang sedang menjelajahi langit dan berperang dengan alien", 2020,
+                "Kisah dimana sekelompok pemuda gila yang sedang menjelajahi langit dan berperang dengan alien",
+                2020,
                 13);
         db[21] = new Baru("Mission Not Impossible", "Action",
                 "Kisah dimana ada seorang penembak jitu yang ingin menyelesaikan misi terakhirnya dengan menggunakan bantuan alien",
@@ -89,7 +93,8 @@ public class App {
                 "Kisah dimana seorang pria dari planet mars yang memiliki misi untuk menebang semua pohon dibumi untuk membuat planet mars menjadi sebuah planet yang indah",
                 2023, 13);
         db[25] = new Original("Two Kick Man", "Action",
-                "Kisah dimana ada seorang pahlawan yang dapat mematikan lawannya hanya dengan dua tendangan maut", 2018,
+                "Kisah dimana ada seorang pahlawan yang dapat mematikan lawannya hanya dengan dua tendangan maut",
+                2018,
                 13);
         db[26] = new Original("Indonesia Revenger", "Action, Anime",
                 "Kisah dimana ada sekelompok orang yang sangat kuat berasal dari Indonesia dan ingin menghancurkan Negara yang sudah menjajah Indonesia",
@@ -116,7 +121,8 @@ public class App {
                 "Kisah petualang seorang pemuda gila yang memiliki bentuk tubuh seperti semanggi dan berwarna putih yang terus mencari orang yang telah mengutuk tubuhnya",
                 2019, 13);
         db[34] = new Original("Deffend on Titan", "Action, Anime",
-                "Kisah dimana sekelompok manusia kerdil yang berjuang untuk melindungi manusia raksasa", 2021, 13);
+                "Kisah dimana sekelompok manusia kerdil yang berjuang untuk melindungi manusia raksasa",
+                2021, 13);
         db[35] = new Original("Attack on Dwarf", "Action, Anime",
                 "Kisah dimana seluruh manusia raksasa yang melindungi kaumnya dari serangan manusia kerdil yang memiliki kekuatan dua kali manusia raksasa",
                 2011, 17);
@@ -201,7 +207,8 @@ public class App {
                 int index = sc.nextInt();
                 if (Pengguna.dbPengguna[index] != null) {
                     Pengguna.dbPengguna[index].upgrade(Pengguna.dbPengguna[index].getKode(),
-                            Pengguna.dbPengguna[index].getNama(), Pengguna.dbPengguna[index].getTelp());
+                            Pengguna.dbPengguna[index].getNama(),
+                            Pengguna.dbPengguna[index].getTelp());
                 } else {
                     System.out.println("Belum ada pengguna yang terdaftar dengan index tersebut.");
                     System.out.println("Silakan lakukan registrasi pengguna terlebih dahulu.");
@@ -212,6 +219,7 @@ public class App {
             else if (response == 6) {
                 System.out.println();
                 System.out.println("Terima kasih telah menggunakan layanan JalaFlix!");
+                sc.close();
                 exit = 1;
             }
 
