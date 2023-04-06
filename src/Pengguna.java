@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Pengguna extends Pelanggan {
+public class Pengguna extends Pelanggan implements UserMethods {
     public static Pengguna[] dbPengguna = new Pengguna[100];
     private static int count = 0;
     private String kode, telp;

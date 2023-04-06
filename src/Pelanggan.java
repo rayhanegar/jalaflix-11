@@ -8,17 +8,6 @@ public abstract class Pelanggan {
     protected boolean statusActive; // active or no
     protected ArrayList<Film> history;// maks 10 film dalam history
 
-    public static void createAcc() {
-    };
-
-    public abstract void getFilm(String tier, Film[] db);
-
-    public abstract void getHistory();
-
-    public abstract void setHistory(Film recent);
-
-    public abstract void watchFilm(int i);
-
     public abstract boolean isActive();
 
     public abstract void accInfo();
