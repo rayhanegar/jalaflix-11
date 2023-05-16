@@ -18,7 +18,7 @@ class Upgrade {
         upgradePage.setLayout(fl);
         upgradePage.setVisible(false);
         upgradePage.setResizable(true);
-        upgradePage.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        upgradePage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         upgradePage.add(test);
         upgradePage.add(back);
@@ -48,7 +48,7 @@ class History {
         HistoryPage.setLayout(fl);
         HistoryPage.setVisible(false);
         HistoryPage.setResizable(true);
-        HistoryPage.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        HistoryPage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         HistoryPage.add(test);
         HistoryPage.add(back);
