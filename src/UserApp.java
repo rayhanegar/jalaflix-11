@@ -20,7 +20,7 @@ public class UserApp {
         JFrame jf = new JFrame("Jalaflix-11");
         JFrame logUser = new JFrame("Login/Register");
         JLabel logUserL1 = new JLabel("di sini nanti ada fitur login. login = bikin akun baru biar gampang");
-        JButton login = new JButton("login (button sementara)");
+        JButton login = new JButton("login (    button sementara)");
         JButton logout = new JButton("Log out");
         JPanel jp1 = new JPanel(gl);
         JPanel navbar = new JPanel();
