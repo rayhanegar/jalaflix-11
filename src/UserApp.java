@@ -22,6 +22,7 @@ public class UserApp {
 
         // content
         JFrame jf = new JFrame("Jalaflix-11");
+        JFrame logUser = new JFrame();
         JPanel jp1 = new JPanel(gl);
         JScrollPane jsp = new JScrollPane(jp1,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -48,7 +49,7 @@ public class UserApp {
             infoText[i].setLineWrap(true);
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
-            infoText[i].setFont(new Font("Inter", Font.BOLD, 24));
+            infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
             movies[i].setPreferredSize(new Dimension(200, 350));
             movies[i].setBackground(white);
             movies[i].add(infoText[i]);
