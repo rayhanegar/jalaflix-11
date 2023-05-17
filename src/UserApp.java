@@ -11,11 +11,14 @@ class Upgrade {
     public static JFrame upgradePage = new JFrame("Upgrade tier");
 
     Upgrade() {
+        Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
+        Navbar.navbar.setBorder(b3);
         JLabel test = new JLabel("Halo dari upgrade page");
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
 
+        upgradePage.setJMenuBar(Navbar.navbar);
         upgradePage.setSize(800, 600);
         upgradePage.setLayout(fl);
         upgradePage.setVisible(false);
@@ -38,28 +41,31 @@ class Upgrade {
 }
 
 class History {
-    public static JFrame HistoryPage = new JFrame("History page");
+    public static JFrame historyPage = new JFrame("History page");
 
     History() {
+        Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
+        Navbar.navbar.setBorder(b3);
         JLabel test = new JLabel("Halo dari history page");
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
 
-        HistoryPage.setSize(800, 600);
-        HistoryPage.setLayout(fl);
-        HistoryPage.setVisible(false);
-        HistoryPage.setResizable(true);
-        HistoryPage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        historyPage.setJMenuBar(Navbar.navbar);
+        historyPage.setSize(800, 600);
+        historyPage.setLayout(fl);
+        historyPage.setVisible(false);
+        historyPage.setResizable(true);
+        historyPage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        HistoryPage.add(test);
-        HistoryPage.add(back);
+        historyPage.add(test);
+        historyPage.add(back);
 
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UserApp.mainApp.setVisible(true);
-                HistoryPage.setVisible(false);
+                historyPage.setVisible(false);
                 UserApp.mainApp.repaint();
                 UserApp.mainApp.revalidate();
             }
@@ -84,7 +90,45 @@ class Navbar {
         account.add(logout);
 
         navbar.add(account);
+
+        Navbar.logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ngikngok) {
+                int result = JOptionPane.showConfirmDialog(UserApp.mainApp, "apakah anda adus riil?", "riil adus kah?",
+                        JOptionPane.YES_NO_OPTION);
+                Navbar.logout.setSelected(true);
+                if (result == JOptionPane.YES_OPTION) {
+                    Login.logUser.setVisible(true);
+                    UserApp.mainApp.setVisible(false);
+                    Login.logUser.repaint();
+                    Login.logUser.revalidate();
+                } else if (result == JOptionPane.NO_OPTION) {
+                    Navbar.logout.setSelected(false);
+                }
+            }
+        });
+
+        Navbar.upgrade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Upgrade.upgradePage.setVisible(true);
+                UserApp.mainApp.setVisible(false);
+                Upgrade.upgradePage.repaint();
+                Upgrade.upgradePage.revalidate();
+            }
+        });
+
+        Navbar.history.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                History.historyPage.setVisible(true);
+                UserApp.mainApp.setVisible(false);
+                History.historyPage.repaint();
+                History.historyPage.revalidate();
+            }
+        });
     }
+
 }
 
 class Login {
@@ -319,43 +363,6 @@ public class UserApp {
         // mainApp.revalidate();
         // }
         // });
-
-        Navbar.logout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ngikngok) {
-                int result = JOptionPane.showConfirmDialog(mainApp, "apakah anda adus riil?", "riil adus kah?",
-                        JOptionPane.YES_NO_OPTION);
-                Navbar.logout.setSelected(true);
-                if (result == JOptionPane.YES_OPTION) {
-                    Login.logUser.setVisible(true);
-                    mainApp.setVisible(false);
-                    Login.logUser.repaint();
-                    Login.logUser.revalidate();
-                } else if (result == JOptionPane.NO_OPTION) {
-                    Navbar.logout.setSelected(false);
-                }
-            }
-        });
-
-        Navbar.upgrade.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Upgrade.upgradePage.setVisible(true);
-                mainApp.setVisible(false);
-                Upgrade.upgradePage.repaint();
-                Upgrade.upgradePage.revalidate();
-            }
-        });
-
-        Navbar.history.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                History.HistoryPage.setVisible(true);
-                mainApp.setVisible(false);
-                History.HistoryPage.repaint();
-                History.HistoryPage.revalidate();
-            }
-        });
 
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new JPanel();
