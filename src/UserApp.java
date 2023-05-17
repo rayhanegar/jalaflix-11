@@ -197,10 +197,10 @@ class Login {
                     for (int j = 1; j < dbRaw.length; j += 2) {
                         passwordAll.add(dbRaw[j]);
                     }
-                    for (int i = 0; i < usernameAll.size(); i++) {
-                        System.out.println(usernameAll.get(i));
-                        System.out.println(passwordAll.get(i));
-                    }
+                    // for (int i = 0; i < usernameAll.size(); i++) {
+                    // System.out.println(usernameAll.get(i));
+                    // System.out.println(passwordAll.get(i));
+                    // }
 
                     int counter = 0;
                     for (int i = 0; i < dbRaw.length / 2; i++) {
@@ -268,8 +268,11 @@ public class UserApp {
         GridLayout gl = new GridLayout(0, 4, 16, 16);
         // GridLayout gl2 = new GridLayout(2, 1);
 
-        // login page di sini
+        // instance all pages
         new Login();
+        new Navbar();
+        new Upgrade();
+        new History();
 
         // JButton logout = new JButton("Log out");
         JPanel movieHandler = new JPanel(gl);
@@ -281,7 +284,6 @@ public class UserApp {
         jsp.getHorizontalScrollBar().setUnitIncrement(8);
 
         // navbar itu diinisialisasi di sini
-        new Navbar();
 
         // border
         Border b = BorderFactory.createEmptyBorder(36, 36, 36, 36);
@@ -338,7 +340,6 @@ public class UserApp {
         Navbar.upgrade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Upgrade(); // instance it first
                 Upgrade.upgradePage.setVisible(true);
                 mainApp.setVisible(false);
                 Upgrade.upgradePage.repaint();
@@ -349,7 +350,6 @@ public class UserApp {
         Navbar.history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new History(); // instance it first
                 History.HistoryPage.setVisible(true);
                 mainApp.setVisible(false);
                 History.HistoryPage.repaint();
