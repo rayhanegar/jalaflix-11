@@ -434,6 +434,7 @@ class Login {
                                 UserApp.mainApp.revalidate();
                                 return;
                             } else {
+                                log.setText("User tidak ada atau password salah");
                                 System.out.println("User tidak ada atau password salah");
                             }
                         }
@@ -510,20 +511,20 @@ public class UserApp {
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
             infoText[i] = new JTextArea(db.dbGetJudul(i));
-            infoText[i].setPreferredSize(new Dimension(160, 250));
+            infoText[i].setPreferredSize(new Dimension(160, 28));
             infoText[i].setLineWrap(true);
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
             infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
 
             JTextArea sinopsisText = new JTextArea(db.dbGetSinopsis(i));
-            sinopsisText.setPreferredSize(new Dimension(200, 200));
+            sinopsisText.setPreferredSize(new Dimension(200, 28));
             sinopsisText.setLineWrap(true);
             sinopsisText.setWrapStyleWord(true);
             sinopsisText.setEditable(false);
             sinopsisText.setFont(new Font("Arial", Font.PLAIN, 12));
 
-            movies[i].setPreferredSize(new Dimension(200, 500));
+            movies[i].setPreferredSize(new Dimension(200, 360));
             movies[i].setBackground(white);
 
             JButton tombolTonton = new JButton("Tonton");
