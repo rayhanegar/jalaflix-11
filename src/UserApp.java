@@ -537,20 +537,40 @@ public class UserApp {
 
             movieHandler.add(movies[i]);
 
-            tombolTonton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            tombolTonton.addActionListener((ActionEvent e) -> {
+                int filmIndex = Integer.parseInt(e.getActionCommand());
+                String judulFilm = db.dbGetJudul(filmIndex);
 
-                    int filmIndex = Integer.parseInt(e.getActionCommand());
-                    String judulFilm = db.dbGetJudul(filmIndex);
+                JFrame newFrame = new JFrame(judulFilm);
+                newFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur JFrame menjadi fullscreen
 
-                    JFrame newFrame = new JFrame(judulFilm);
-                    newFrame.setSize(500, 500);
+                // Membuat panel utama dengan layout manager BorderLayout
+                JPanel mainPanel = new JPanel(new BorderLayout());
 
-                    newFrame.setVisible(true);
-                }
+                // Membuat JPanel untuk menyimpan teks dan mengatur layout manager-nya menjadi
+                // FlowLayout
+                JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                JLabel labelSelamatMenonton = new JLabel("Selamat menonton :)");
+                labelSelamatMenonton.setFont(new Font("Arial", Font.BOLD, 18));
+                topPanel.add(labelSelamatMenonton);
+
+                // Menambahkan JPanel ke panel utama
+                mainPanel.add(topPanel, BorderLayout.NORTH);
+
+                // Menambahkan gambar ke dalam JLabel dan menempatkannya di tengah
+                ImageIcon icon = new ImageIcon("JALAFLIX-11/jalaflix.png"); // Ganti dengan path sesuai dengan lokasi
+                                                                            // gambar Anda
+                JLabel labelGambar = new JLabel(icon);
+                labelGambar.setHorizontalAlignment(JLabel.CENTER);
+                mainPanel.add(labelGambar, BorderLayout.CENTER);
+
+                newFrame.getContentPane().add(mainPanel); // Menambahkan panel utama ke dalam content pane JFrame
+
+                newFrame.setVisible(true);
             });
+
         }
+
         // mainApp.add(navbar);
         mainApp.add(jsp);
 
