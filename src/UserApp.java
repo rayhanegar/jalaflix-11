@@ -81,6 +81,15 @@ class History {
             }
         });
     }
+
+    public static void paintMovieHistory() {
+        JLabel movieHistoryLabel[] = new JLabel[10];
+        Film temp[] = UserApp.currentUser.getRecentHistory();
+        for (int i = 0; i < movieHistoryLabel.length; i++) {
+            movieHistoryLabel[i] = new JLabel(temp[i].getJudul());
+            historyPage.add(movieHistoryLabel[i]);
+        }
+    }
 }
 
 class Navbar {
@@ -133,6 +142,7 @@ class Navbar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 History.historyPage.setJMenuBar(Navbar.navbar);
+                History.paintMovieHistory();
                 History.historyPage.setVisible(true);
                 UserApp.mainApp.setVisible(false);
                 History.historyPage.repaint();
@@ -542,6 +552,9 @@ public class UserApp {
                 int filmIndex = Integer.parseInt(e.getActionCommand());
                 String judulFilm = db.dbGetJudul(filmIndex);
 
+                // masukkan film ke history pengguna
+                currentUser.setHistory(filmIndex);
+
                 JButton back = new JButton("go back");
 
                 JFrame newFrame = new JFrame(judulFilm);
@@ -560,6 +573,14 @@ public class UserApp {
                 // Menambahkan JPanel ke panel utama
                 mainPanel.add(topPanel, BorderLayout.NORTH);
 
+                // Menambahkan gambar ke dalam JLabel dan menempatkannya di tengah
+                ImageIcon icon = new ImageIcon("JALAFLIX-11/jalaflix.png"); // Ganti dengan path sesuai dengan lokasi
+                                                                            // gambar Anda
+                JLabel labelGambar = new JLabel(icon);
+                labelGambar.setHorizontalAlignment(JLabel.CENTER);
+                mainPanel.add(labelGambar, BorderLayout.CENTER);
+
+                // tombol untuk kembali dari nonton film
                 back.setSize(new Dimension(120, 36));
                 mainPanel.add(back);
 
@@ -574,15 +595,7 @@ public class UserApp {
                     }
                 });
 
-                // Menambahkan gambar ke dalam JLabel dan menempatkannya di tengah
-                ImageIcon icon = new ImageIcon("JALAFLIX-11/jalaflix.png"); // Ganti dengan path sesuai dengan lokasi
-                                                                            // gambar Anda
-                JLabel labelGambar = new JLabel(icon);
-                labelGambar.setHorizontalAlignment(JLabel.CENTER);
-                mainPanel.add(labelGambar, BorderLayout.CENTER);
-
                 newFrame.getContentPane().add(mainPanel); // Menambahkan panel utama ke dalam content pane JFrame
-
                 newFrame.setVisible(true);
             });
 

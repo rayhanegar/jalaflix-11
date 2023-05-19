@@ -180,6 +180,18 @@ public class Pengguna extends Pelanggan implements UserMethods {
         history.add(recent);
     }
 
+    public void setHistory(int i) {
+        history.add(Database.db[i]);
+    }
+
+    public Film[] getRecentHistory() {
+        Film temp[] = new Film[10];
+        for (int i = history.size() - 1, j = 0; i > history.size() - 10 && j < 10; i--, j++) {
+            temp[j] = history.get(i);
+        }
+        return temp;
+    }
+
     public void watchFilm(int i) {
         if (akses != null) {
             if (akses[i] != null) {
