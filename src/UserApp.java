@@ -13,7 +13,6 @@ class Upgrade {
     public static JFrame upgradePage = new JFrame("Upgrade Tier");
 
     Upgrade() {
-
         JButton back = new JButton("go back");
         FlowLayout fl = new FlowLayout();
 
@@ -28,15 +27,12 @@ class Upgrade {
 
         // Create panel for tier
 
-
         // Create panel for current tier information
-
 
         // Di dalem panel tier: gambar tier, nama tier, deskripsi, harga, sama tombol
         // Tombol -> masuk ke dalam detail panel, yang lain setVisible(false)
         // Di dalem detail panel, ada button for pay
         // click pay -> new window
-
 
         upgradePage.add(back);
 
