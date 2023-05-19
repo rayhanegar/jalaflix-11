@@ -59,11 +59,13 @@ class History {
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
+        GridLayout gl = new GridLayout(0, 4, 16, 0);
 
         historyPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         historyPage.setTitle("Baru saja ditonton");
         historyPage.setJMenuBar(Navbar.navbar);
         historyPage.setSize(1200, 800);
+        historyPanel.setLayout(gl);
         historyPage.setLayout(fl);
         historyPage.setVisible(false);
         historyPage.setResizable(true);
@@ -89,6 +91,9 @@ class History {
         Film temp[] = UserApp.currentUser.getRecentHistory();
         for (int i = 0; i < movieHistoryLabel.length; i++) {
             movieHistoryLabel[i] = new JLabel(temp[i].getJudul());
+            movieHistoryLabel[i].setPreferredSize(new Dimension(250, 48));
+            historyPanel.setPreferredSize(new Dimension(1920 / 4, 48));
+            historyPanel.setBackground(Color.WHITE);
             historyPanel.add(movieHistoryLabel[i]);
         }
         historyPage.add(historyPanel);
