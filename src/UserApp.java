@@ -511,14 +511,14 @@ public class UserApp {
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
             infoText[i] = new JTextArea(db.dbGetJudul(i));
-            infoText[i].setPreferredSize(new Dimension(160, 28));
+            infoText[i].setPreferredSize(new Dimension(160, 12));
             infoText[i].setLineWrap(true);
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
             infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
 
             JTextArea sinopsisText = new JTextArea(db.dbGetSinopsis(i));
-            sinopsisText.setPreferredSize(new Dimension(200, 28));
+            sinopsisText.setPreferredSize(new Dimension(200, 24));
             sinopsisText.setLineWrap(true);
             sinopsisText.setWrapStyleWord(true);
             sinopsisText.setEditable(false);
@@ -542,6 +542,8 @@ public class UserApp {
                 int filmIndex = Integer.parseInt(e.getActionCommand());
                 String judulFilm = db.dbGetJudul(filmIndex);
 
+                JButton back = new JButton("go back");
+
                 JFrame newFrame = new JFrame(judulFilm);
                 newFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur JFrame menjadi fullscreen
 
@@ -557,6 +559,20 @@ public class UserApp {
 
                 // Menambahkan JPanel ke panel utama
                 mainPanel.add(topPanel, BorderLayout.NORTH);
+
+                back.setSize(new Dimension(120, 36));
+                mainPanel.add(back);
+
+                back.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        UserApp.mainApp.setJMenuBar(Navbar.navbar);
+                        UserApp.mainApp.setVisible(true);
+                        mainPanel.setVisible(false);
+                        UserApp.mainApp.repaint();
+                        UserApp.mainApp.revalidate();
+                    }
+                });
 
                 // Menambahkan gambar ke dalam JLabel dan menempatkannya di tengah
                 ImageIcon icon = new ImageIcon("JALAFLIX-11/jalaflix.png"); // Ganti dengan path sesuai dengan lokasi
