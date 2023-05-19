@@ -51,9 +51,11 @@ class Upgrade {
 
 class History {
     public static JFrame historyPage = new JFrame("History page");
+    public static JPanel historyPanel = new JPanel();
 
     History() {
         JLabel test = new JLabel("Halo dari history page");
+
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
@@ -82,14 +84,16 @@ class History {
         });
     }
 
-    public static void paintMovieHistory() {
-        JLabel movieHistoryLabel[] = new JLabel[10];
+    public static void paintMovieHistory(Pengguna currentUser) {
+        JLabel movieHistoryLabel[] = new JLabel[currentUser.getHistoryCount()];
         Film temp[] = UserApp.currentUser.getRecentHistory();
         for (int i = 0; i < movieHistoryLabel.length; i++) {
             movieHistoryLabel[i] = new JLabel(temp[i].getJudul());
-            historyPage.add(movieHistoryLabel[i]);
+            historyPanel.add(movieHistoryLabel[i]);
         }
+        historyPage.add(historyPanel);
     }
+
 }
 
 class Navbar {
@@ -142,7 +146,7 @@ class Navbar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 History.historyPage.setJMenuBar(Navbar.navbar);
-                History.paintMovieHistory();
+                History.paintMovieHistory(UserApp.currentUser);
                 History.historyPage.setVisible(true);
                 UserApp.mainApp.setVisible(false);
                 History.historyPage.repaint();
@@ -406,6 +410,7 @@ class Login {
                         Pengguna.dbPengguna[userCount] = new Pengguna(kode, usernameInput, AgeInput, phoneInput,
                                 "reguler", true);
                         UserApp.currentUser = Pengguna.dbPengguna[userCount];
+                        System.out.println("user ke-" + userCount);
                         userCount++;
 
                         // habis itu langsung masuk
@@ -424,6 +429,7 @@ class Login {
                                     if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
                                         // set current user
                                         UserApp.currentUser = Pengguna.dbPengguna[j];
+                                        System.out.println("user ke-" + j);
                                         break;
                                     }
                                 }
@@ -553,7 +559,7 @@ public class UserApp {
                 String judulFilm = db.dbGetJudul(filmIndex);
 
                 // masukkan film ke history pengguna
-                currentUser.setHistory(filmIndex);
+                currentUser.setIndexHistory(filmIndex);
 
                 JButton back = new JButton("go back");
 
