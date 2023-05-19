@@ -16,9 +16,10 @@ class Upgrade {
 
         FlowLayout fl = new FlowLayout();
 
+        upgradePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         upgradePage.setTitle("Upgrade akunmu!");
         upgradePage.setJMenuBar(Navbar.navbar);
-        upgradePage.setSize(800, 600);
+        upgradePage.setSize(1200, 800);
         upgradePage.setLayout(fl);
         upgradePage.setVisible(false);
         upgradePage.setResizable(true);
@@ -49,9 +50,10 @@ class History {
 
         FlowLayout fl = new FlowLayout();
 
+        historyPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         historyPage.setTitle("Baru saja ditonton");
         historyPage.setJMenuBar(Navbar.navbar);
-        historyPage.setSize(800, 600);
+        historyPage.setSize(1200, 800);
         historyPage.setLayout(fl);
         historyPage.setVisible(false);
         historyPage.setResizable(true);
@@ -135,9 +137,13 @@ class Navbar {
 
 class Login {
     public static JFrame logUser = new JFrame("Login/Register");
+    public static JPanel logPanel = new JPanel();
+
     private static final String db = "user_database_jalaflix_11.txt";
 
     Login() {
+        logUser.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         try {
             String init_data = "user01 password01 user02 password02";
             File dbUser = new File(db);
@@ -156,14 +162,23 @@ class Login {
 
         JLabel usernameLabel = new JLabel("username");
         JLabel passwordLabel = new JLabel("password");
+        JLabel ageLabel = new JLabel("umur");
+        JLabel phoneLabel = new JLabel("telepon");
 
         JPanel usernamePanel = new JPanel();
         JPanel passwordPanel = new JPanel();
+        JPanel agePanel = new JPanel();
+        JPanel phonePanel = new JPanel();
 
         JTextField usernameField = new JTextField();
-        usernameField.setPreferredSize(new Dimension(700, 36));
         JPasswordField passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(700, 36));
+        JTextField ageField = new JTextField();
+        JTextField phoneField = new JTextField();
+
+        usernameField.setPreferredSize(new Dimension(350, 36));
+        passwordField.setPreferredSize(new Dimension(350, 36));
+        ageField.setPreferredSize(new Dimension(350, 36));
+        phoneField.setPreferredSize(new Dimension(350, 36));
 
         usernamePanel.add(usernameLabel);
         usernamePanel.add(usernameField);
@@ -171,25 +186,37 @@ class Login {
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordField);
 
+        agePanel.add(ageLabel);
+        agePanel.add(ageField);
+
+        phonePanel.add(phoneLabel);
+        phonePanel.add(phoneField);
+
         JButton logMeIn = new JButton("create and/or login");
 
         FlowLayout fl = new FlowLayout();
+        GridLayout gl = new GridLayout(0, 1, 0, 16);
+        BorderLayout bl = new BorderLayout(8, 8);
 
-        logUser.setSize(800, 600);
+        logUser.setSize(1200, 800);
         usernamePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         passwordPanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
-        logMeIn.setPreferredSize(new Dimension(logUser.getWidth() - 200, 36));
+        agePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
+        phonePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
+        logMeIn.setPreferredSize(new Dimension(200, 36));
 
-        logUser.setSize(800, 600);
-        logUser.setLayout(fl);
+        // logUser.setLayout();
         logUser.setVisible(true);
         logUser.setResizable(true);
         logUser.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        logUser.add(usernamePanel);
-        logUser.add(passwordPanel);
+        logPanel.add(usernamePanel);
+        logPanel.add(passwordPanel);
+        logPanel.add(agePanel);
+        logPanel.add(phonePanel);
+        logPanel.add(logMeIn);
 
-        logUser.add(logMeIn);
+        logUser.add(logPanel);
 
         logMeIn.addActionListener(new ActionListener() {
             @Override
@@ -325,15 +352,16 @@ public class UserApp {
         Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
 
         // prelim set window
-        mainApp.setSize(800, 600); // main program window
+        mainApp.setSize(1200, 800); // main program window
 
-        movieHandler.setSize(800, 600); // isinya film
+        movieHandler.setSize(1200, 800); // isinya film
         // logout.setSize(mainApp.getWidth(), 100);
 
         // login doang
 
         // aplikasi utama
         mainApp.setVisible(false);
+        mainApp.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainApp.setResizable(true);
         mainApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // navbar.add(logout);
