@@ -376,15 +376,47 @@ public class UserApp {
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
             infoText[i] = new JTextArea(db.dbGetJudul(i));
-            infoText[i].setPreferredSize(new Dimension(200, 350));
+            infoText[i].setPreferredSize(new Dimension(160, 250));
             infoText[i].setLineWrap(true);
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
             infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
-            movies[i].setPreferredSize(new Dimension(200, 350));
+            
+            JTextArea sinopsisText = new JTextArea(db.dbGetSinopsis(i));
+            sinopsisText.setPreferredSize(new Dimension(200, 200));
+            sinopsisText.setLineWrap(true);
+            sinopsisText.setWrapStyleWord(true);
+            sinopsisText.setEditable(false);
+            sinopsisText.setFont(new Font("Arial", Font.PLAIN, 12));
+
+            movies[i].setPreferredSize(new Dimension(200, 500));
             movies[i].setBackground(white);
+            
+            JButton tombolTonton = new JButton("Tonton");
+            tombolTonton.setActionCommand(String.valueOf(i)); 
+
+            movies[i].setLayout(new BoxLayout(movies[i], BoxLayout.Y_AXIS));
             movies[i].add(infoText[i]);
+            movies[i].add(sinopsisText);
+            movies[i].add(Box.createVerticalGlue()); 
+            movies[i].add(tombolTonton);
+
             movieHandler.add(movies[i]);
+            
+            tombolTonton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    int filmIndex = Integer.parseInt(e.getActionCommand()); 
+                    String judulFilm = db.dbGetJudul(filmIndex);
+                    
+                    JFrame newFrame = new JFrame(judulFilm);
+                    newFrame.setSize(500, 500);
+
+                    
+                    newFrame.setVisible(true);
+                }
+            });
         }
         // mainApp.add(navbar);
         mainApp.add(jsp);

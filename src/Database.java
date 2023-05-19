@@ -18,6 +18,10 @@ public class Database {
     public String dbGetJudul(int index) {
         return db[index].getJudul();
     }
+    
+    public String dbGetSinopsis(int index) {
+        return db[index].getSinopsis();
+    }
 
     Database() {
         // FILM 5 TAHUN LAWAS
@@ -134,4 +138,5 @@ public class Database {
                 "Kisah dimana seluruh manusia raksasa yang melindungi kaumnya dari serangan manusia kerdil yang memiliki kekuatan dua kali manusia raksasa",
                 2011, 17);
     }
+
 }
