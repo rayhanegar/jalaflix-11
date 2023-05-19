@@ -11,13 +11,12 @@ class Upgrade {
     public static JFrame upgradePage = new JFrame("Upgrade tier");
 
     Upgrade() {
-        Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
-        Navbar.navbar.setBorder(b3);
         JLabel test = new JLabel("Halo dari upgrade page");
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
 
+        upgradePage.setTitle("Upgrade akunmu!");
         upgradePage.setJMenuBar(Navbar.navbar);
         upgradePage.setSize(800, 600);
         upgradePage.setLayout(fl);
@@ -31,6 +30,7 @@ class Upgrade {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                UserApp.mainApp.setJMenuBar(Navbar.navbar);
                 UserApp.mainApp.setVisible(true);
                 upgradePage.setVisible(false);
                 UserApp.mainApp.repaint();
@@ -44,13 +44,12 @@ class History {
     public static JFrame historyPage = new JFrame("History page");
 
     History() {
-        Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
-        Navbar.navbar.setBorder(b3);
         JLabel test = new JLabel("Halo dari history page");
         JButton back = new JButton("go back");
 
         FlowLayout fl = new FlowLayout();
 
+        historyPage.setTitle("Baru saja ditonton");
         historyPage.setJMenuBar(Navbar.navbar);
         historyPage.setSize(800, 600);
         historyPage.setLayout(fl);
@@ -64,6 +63,7 @@ class History {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                UserApp.mainApp.setJMenuBar(Navbar.navbar);
                 UserApp.mainApp.setVisible(true);
                 historyPage.setVisible(false);
                 UserApp.mainApp.repaint();
@@ -111,6 +111,7 @@ class Navbar {
         Navbar.upgrade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Upgrade.upgradePage.setJMenuBar(Navbar.navbar);
                 Upgrade.upgradePage.setVisible(true);
                 UserApp.mainApp.setVisible(false);
                 Upgrade.upgradePage.repaint();
@@ -121,6 +122,7 @@ class Navbar {
         Navbar.history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                History.historyPage.setJMenuBar(Navbar.navbar);
                 History.historyPage.setVisible(true);
                 UserApp.mainApp.setVisible(false);
                 History.historyPage.repaint();
@@ -133,9 +135,6 @@ class Navbar {
 
 class Login {
     public static JFrame logUser = new JFrame("Login/Register");
-    // public static JLabel infoLogin = new JLabel("di sini nanti ada fitur login.
-    // login = bikin akun baru biar gampang");
-    // public static JButton login = new JButton("login (button sementara)");
     private static final String db = "user_database_jalaflix_11.txt";
 
     Login() {
@@ -177,10 +176,6 @@ class Login {
         FlowLayout fl = new FlowLayout();
 
         logUser.setSize(800, 600);
-        // login.setBounds(36, 36, 360, 36);
-
-        // infoLogin.setPreferredSize(new Dimension(logUser.getWidth() - 128, 36));
-        // login.setPreferredSize(new Dimension(logUser.getWidth() - 400, 36));
         usernamePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         passwordPanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         logMeIn.setPreferredSize(new Dimension(logUser.getWidth() - 200, 36));
@@ -190,9 +185,6 @@ class Login {
         logUser.setVisible(true);
         logUser.setResizable(true);
         logUser.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        // logUser.add(infoLogin);
-        // logUser.add(login);
 
         logUser.add(usernamePanel);
         logUser.add(passwordPanel);
@@ -241,10 +233,6 @@ class Login {
                     for (int j = 1; j < dbRaw.length; j += 2) {
                         passwordAll.add(dbRaw[j]);
                     }
-                    // for (int i = 0; i < usernameAll.size(); i++) {
-                    // System.out.println(usernameAll.get(i));
-                    // System.out.println(passwordAll.get(i));
-                    // }
 
                     int counter = 0;
                     for (int i = 0; i < dbRaw.length / 2; i++) {
@@ -264,6 +252,7 @@ class Login {
                         usernameField.setText("");
                         passwordField.setText("");
                         // habis itu langsung masuk
+                        UserApp.mainApp.setJMenuBar(Navbar.navbar);
                         UserApp.mainApp.setVisible(true);
                         logUser.setVisible(false);
                         UserApp.mainApp.repaint();
@@ -278,6 +267,7 @@ class Login {
                                 usernameField.setText("");
                                 passwordField.setText("");
                                 // habis itu langsung masuk
+                                UserApp.mainApp.setJMenuBar(Navbar.navbar);
                                 UserApp.mainApp.setVisible(true);
                                 logUser.setVisible(false);
                                 UserApp.mainApp.repaint();
@@ -354,16 +344,6 @@ public class UserApp {
         mainApp.setJMenuBar(Navbar.navbar);
 
         // logic
-        // Login.login.addActionListener(new ActionListener() {
-        // @Override
-        // public void actionPerformed(ActionEvent ae) {
-        // mainApp.setVisible(true);
-        // Login.logUser.setVisible(false);
-        // mainApp.repaint();
-        // mainApp.revalidate();
-        // }
-        // });
-
         for (int i = 0; i < movies.length; i++) {
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
