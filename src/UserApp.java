@@ -148,10 +148,12 @@ class Login {
     public static JPanel logPanel = new JPanel();
 
     private static final String db = "user_database_jalaflix_11.txt";
+    private static int userCount = 0;
 
     Login() {
         logUser.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        // read db
         try {
             String init_data = "user01 password01 user02 password02";
             File dbUser = new File(db);
@@ -168,20 +170,61 @@ class Login {
             System.out.println("I/O error");
         }
 
+        // initiate all profiles in db to objects
+        try {
+            String temp = "", data = "";
+            FileInputStream fis = new FileInputStream(db);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            while ((temp = br.readLine()) != null) {
+                data = temp;
+            }
+            fis.getChannel().position(0);
+            br = new BufferedReader(new InputStreamReader(fis));
+            br.close();
+
+            /**
+             * kode = 6*i
+             * nama = 6*i+1
+             * pass = 6*i+2
+             * umur = 6*i+3
+             * telp = 6*i+4
+             * tier = 6*i+5
+             * aktif = 6*i+6
+             * i = index
+             */
+
+            // splitting....
+            String dbRaw[] = data.split(" ");
+
+            // instance the users every time program starts
+            for (int i = 0; i < dbRaw.length / 7; i++) {
+                Pengguna.dbPengguna[i] = new Pengguna(dbRaw[i + (6 * i)], dbRaw[i + (6 * i + 1)],
+                        Integer.parseInt(dbRaw[i + (6 * i + 3)]), dbRaw[i + (6 * i + 4)], dbRaw[i + (6 * i + 5)],
+                        Boolean.parseBoolean(dbRaw[i + (6 * i + 6)]));
+            }
+        } catch (Exception e) {
+            System.out.println("I/O error atau instancec user tidak dibuat");
+            e.printStackTrace();
+        }
+
+        String ages[] = { "0-7", "8-12", "13-17", "18-21", "21+" };
+
         JLabel usernameLabel = new JLabel("username");
         JLabel passwordLabel = new JLabel("password");
-        JLabel ageLabel = new JLabel("umur");
-        JLabel phoneLabel = new JLabel("telepon");
+        JLabel ageLabel = new JLabel("umur*");
+        JLabel phoneLabel = new JLabel("telepon*");
+        JLabel info = new JLabel("*WAJIB DIISI (HANYA saat login)");
+        JTextArea log = new JTextArea();
+
+        JTextField usernameField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+        JComboBox<String> ageField = new JComboBox<String>(ages);
+        JTextField phoneField = new JTextField();
 
         JPanel usernamePanel = new JPanel();
         JPanel passwordPanel = new JPanel();
         JPanel agePanel = new JPanel();
         JPanel phonePanel = new JPanel();
-
-        JTextField usernameField = new JTextField();
-        JPasswordField passwordField = new JPasswordField();
-        JTextField ageField = new JTextField();
-        JTextField phoneField = new JTextField();
 
         usernameField.setPreferredSize(new Dimension(350, 36));
         passwordField.setPreferredSize(new Dimension(350, 36));
@@ -202,9 +245,9 @@ class Login {
 
         JButton logMeIn = new JButton("create and/or login");
 
-        FlowLayout fl = new FlowLayout();
-        GridLayout gl = new GridLayout(0, 1, 0, 16);
-        BorderLayout bl = new BorderLayout(8, 8);
+        // FlowLayout fl = new FlowLayout();
+        // GridLayout gl = new GridLayout(0, 1, 0, 16);
+        // BorderLayout bl = new BorderLayout(8, 8);
 
         logUser.setSize(1200, 800);
         usernamePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
@@ -212,6 +255,10 @@ class Login {
         agePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         phonePanel.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         logMeIn.setPreferredSize(new Dimension(200, 36));
+        info.setPreferredSize(new Dimension(logUser.getWidth(), 36));
+        log.setPreferredSize(new Dimension(logUser.getWidth(), 36));
+        log.setEditable(false);
+        log.setFont(new Font("Arial", Font.PLAIN, 12));
 
         // logUser.setLayout();
         logUser.setVisible(true);
@@ -223,10 +270,14 @@ class Login {
         logPanel.add(agePanel);
         logPanel.add(phonePanel);
         logPanel.add(logMeIn);
+        logPanel.add(info);
+        logPanel.add(log);
 
         logUser.add(logPanel);
 
         logMeIn.addActionListener(new ActionListener() {
+            String kode = Integer.toString((int) (Math.random() * 1000000));
+
             @Override
             /**
              * USERNAME HARUS SATU SUKU KATA, tapi kalau user input dua atau lebih, akan
@@ -237,11 +288,38 @@ class Login {
                 String temp, data = "";
                 String usernameInput = usernameField.getText().replace(" ", "_");
                 String passwordInput = new String(passwordField.getPassword());
+                int tempAgeInput = ageField.getSelectedIndex();
+                int AgeInput = 0;
+                String phoneInput = phoneField.getText();
                 System.out.println(usernameInput + " " + passwordInput);
+
+                switch (tempAgeInput) {
+                    case 0:
+                        AgeInput = 7;
+                        break;
+                    case 1:
+                        AgeInput = 12;
+                        break;
+                    case 2:
+                        AgeInput = 17;
+                        break;
+                    case 3:
+                        AgeInput = 20;
+                        break;
+                    case 4:
+                        AgeInput = 21;
+                        break;
+                    default:
+                        ;
+                }
+
                 if (usernameInput.equals("") || passwordInput.equals("")) {
+                    log.setText("Username atau password tidak boleh kosong");
                     System.out.println("Username atau password tidak boleh kosong");
                     return;
                 }
+
+                // hanya ngurus login
                 try {
                     FileInputStream fis = new FileInputStream(db);
                     BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -256,37 +334,72 @@ class Login {
                     String dbRaw[] = data.split(" ");
                     ArrayList<String> usernameAll = new ArrayList<>();
                     ArrayList<String> passwordAll = new ArrayList<>();
-                    for (int i = 0; i < dbRaw.length; i += 2) {
-                        dbRaw[i].replace("_", " ");
+                    for (int i = 0; i < dbRaw.length / 7; i++) {
+                        String temq = dbRaw[i + (6 * i + 1)].replace("_", " ");
                         /**
                          * nanti kalau user ada bikin username dengan spasi (harusnya gabole), oleh
                          * program akan diubah menjadi underscore lalu dihapus lagi sehingga ada spasi
                          * yay
                          */
-                        usernameAll.add(dbRaw[i]);
+                        usernameAll.add(temq);
                     }
-                    for (int j = 1; j < dbRaw.length; j += 2) {
-                        passwordAll.add(dbRaw[j]);
+                    for (int i = 0; i < dbRaw.length / 7; i++) {
+                        passwordAll.add(dbRaw[i + (6 * i + 2)]);
                     }
 
+                    System.out.println("debug");
+                    for (int i = 0; i < usernameAll.size(); i++) {
+                        System.out.println(usernameAll.get(i));
+                        System.out.println(passwordAll.get(i));
+                    }
+                    System.out.println("debug end");
+
                     int counter = 0;
-                    for (int i = 0; i < dbRaw.length / 2; i++) {
+                    for (int i = 0; i < usernameAll.size(); i++) {
                         if (usernameAll.get(i).equals(usernameInput)) {
                             counter++;
                         }
                     }
 
+                    // urusan dengan akun
                     if (counter == 0) {
-                        usernameAll.add(usernameInput);
-                        passwordAll.add(passwordInput);
+                        // buat akun baru
+                        if (phoneInput.equals("")) {
+                            log.setText("Nomor telepon tidak boleh kosong saat pendaftaran");
+                            System.out.println("Nomor telepon tidak boleh kosong saat pendaftaran");
+                            return;
+                        }
                         FileWriter fw = new FileWriter(db);
-                        fw.write(data + " " + usernameInput + " " + passwordInput);
+                        fw.write(data + kode + " " + usernameInput + " " + passwordInput + " " + AgeInput + " "
+                                + phoneInput + " " + "reguler" + " " + true + " ");
                         fw.close();
                         System.out.println("User berhasil ditambahkan");
+
+                        /**
+                         * kode = 6*i
+                         * nama = 6*i+1
+                         * pass = 6*i+2
+                         * umur = 6*i+3
+                         * telp = 6*i+4
+                         * tier = 6*i+5
+                         * aktif = 6*i+6
+                         * i = index
+                         */
+
                         // kosongkan field
                         usernameField.setText("");
                         passwordField.setText("");
+                        ageField.setSelectedIndex(0);
+                        phoneField.setText("");
+
+                        // bikin kelas pelanggan baru
+                        Pengguna.dbPengguna[userCount] = new Pengguna(kode, usernameInput, AgeInput, phoneInput,
+                                "reguler", true);
+                        UserApp.currentUser = Pengguna.dbPengguna[userCount];
+                        userCount++;
+
                         // habis itu langsung masuk
+                        System.out.println("selamat bergabung, " + UserApp.currentUser.getNama());
                         UserApp.mainApp.setJMenuBar(Navbar.navbar);
                         UserApp.mainApp.setVisible(true);
                         logUser.setVisible(false);
@@ -294,14 +407,26 @@ class Login {
                         UserApp.mainApp.revalidate();
                         return;
                     } else {
-                        for (int i = 0; i < dbRaw.length / 2; i++) {
+                        for (int i = 0; i < usernameAll.size(); i++) {
                             if (usernameAll.get(i).equals(usernameInput)
                                     && passwordAll.get(i).equals(passwordInput)) {
+                                for (int j = 0; j < Pengguna.dbPengguna.length; j++) {
+                                    if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
+                                        // set current user
+                                        UserApp.currentUser = Pengguna.dbPengguna[j];
+                                        break;
+                                    }
+                                }
                                 System.out.println("User ada");
+
                                 // kosongkan field
                                 usernameField.setText("");
                                 passwordField.setText("");
+                                ageField.setSelectedIndex(0);
+                                phoneField.setText("");
+
                                 // habis itu langsung masuk
+                                System.out.println("halo, " + UserApp.currentUser.getNama());
                                 UserApp.mainApp.setJMenuBar(Navbar.navbar);
                                 UserApp.mainApp.setVisible(true);
                                 logUser.setVisible(false);
@@ -324,6 +449,7 @@ class Login {
 
 public class UserApp {
     public static JFrame mainApp = new JFrame("Jalaflix-11");
+    public static Pengguna currentUser;
 
     public static void main(String[] args) {
         // var
@@ -389,7 +515,7 @@ public class UserApp {
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
             infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
-            
+
             JTextArea sinopsisText = new JTextArea(db.dbGetSinopsis(i));
             sinopsisText.setPreferredSize(new Dimension(200, 200));
             sinopsisText.setLineWrap(true);
@@ -399,29 +525,28 @@ public class UserApp {
 
             movies[i].setPreferredSize(new Dimension(200, 500));
             movies[i].setBackground(white);
-            
+
             JButton tombolTonton = new JButton("Tonton");
-            tombolTonton.setActionCommand(String.valueOf(i)); 
+            tombolTonton.setActionCommand(String.valueOf(i));
 
             movies[i].setLayout(new BoxLayout(movies[i], BoxLayout.Y_AXIS));
             movies[i].add(infoText[i]);
             movies[i].add(sinopsisText);
-            movies[i].add(Box.createVerticalGlue()); 
+            movies[i].add(Box.createVerticalGlue());
             movies[i].add(tombolTonton);
 
             movieHandler.add(movies[i]);
-            
+
             tombolTonton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    int filmIndex = Integer.parseInt(e.getActionCommand()); 
+                    int filmIndex = Integer.parseInt(e.getActionCommand());
                     String judulFilm = db.dbGetJudul(filmIndex);
-                    
+
                     JFrame newFrame = new JFrame(judulFilm);
                     newFrame.setSize(500, 500);
 
-                    
                     newFrame.setVisible(true);
                 }
             });
