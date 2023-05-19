@@ -8,12 +8,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 class Upgrade {
-    public static JFrame upgradePage = new JFrame("Upgrade tier");
+    public static JFrame upgradePage = new JFrame("Upgrade Tier");
 
     Upgrade() {
-        JLabel test = new JLabel("Halo dari upgrade page");
-        JButton back = new JButton("go back");
 
+        JButton back = new JButton("go back");
         FlowLayout fl = new FlowLayout();
 
         upgradePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -25,7 +24,18 @@ class Upgrade {
         upgradePage.setResizable(true);
         upgradePage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        upgradePage.add(test);
+        // Create panel for tier
+
+
+        // Create panel for current tier information
+
+
+        // Di dalem panel tier: gambar tier, nama tier, deskripsi, harga, sama tombol
+        // Tombol -> masuk ke dalam detail panel, yang lain setVisible(false)
+        // Di dalem detail panel, ada button for pay
+        // click pay -> new window
+
+
         upgradePage.add(back);
 
         back.addActionListener(new ActionListener() {
