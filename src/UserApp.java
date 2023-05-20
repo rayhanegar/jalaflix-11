@@ -9,34 +9,66 @@ import java.util.ArrayList;
 
 // jdk-18.0.2
 
-class Upgrade {
+class Upgrade extends JFrame{
     public static JFrame upgradePage = new JFrame("Upgrade Tier");
+    private JPanel upgradePanel;
+    private JButton jbBack;
+    private JPanel jpHeading;
+    private JLabel jlHeading;
+    private JPanel jpTierOptions;
+    private JPanel jpReg;
+    private JLabel jlRegHeading;
+    private JPanel jpGold;
+    private JLabel jlGoldHeading;
+    private JPanel jpPlat;
+    private JLabel jlRegDesc;
+    private JLabel jlGoldDesc;
+    private JLabel jlPlatHeading;
+    private JLabel jlPlatDesc;
+    private JButton jbReg;
+    private JButton jbGold;
+    private JButton jbPlat;
+    private static String[] info = new String[2];
 
-    Upgrade() {
-        JButton back = new JButton("go back");
-        FlowLayout fl = new FlowLayout();
+    Upgrade(){
 
-        upgradePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        upgradePage.setTitle("Upgrade akunmu!");
-        upgradePage.setJMenuBar(Navbar.navbar);
+        upgradePage.setContentPane(upgradePanel);
+//        setContentPane(upgradePanel);
         upgradePage.setSize(1200, 800);
-        upgradePage.setLayout(fl);
+        upgradePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         upgradePage.setVisible(false);
-        upgradePage.setResizable(true);
-        upgradePage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        upgradePage.setTitle("Upgrade Tier");
+        upgradePage.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        upgradePage.setJMenuBar(Navbar.navbar);
 
-        // Create panel for tier
+        jbReg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                info[0] = "Regular";
+                info[1] = "Rp30,000.00";
+                new PaymentPage(info[0], info[1]);
+            }
+        });
 
-        // Create panel for current tier information
+        jbGold.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                info[0] = "Gold";
+                info[1] = "Rp50,000.00";
+                new PaymentPage(info[0], info[1]);
+            }
+        });
 
-        // Di dalem panel tier: gambar tier, nama tier, deskripsi, harga, sama tombol
-        // Tombol -> masuk ke dalam detail panel, yang lain setVisible(false)
-        // Di dalem detail panel, ada button for pay
-        // click pay -> new window
+        jbPlat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                info[0] = "Platinum";
+                info[1] = "Rp80,000.00";
+                new PaymentPage(info[0], info[1]);
+            }
+        });
 
-        upgradePage.add(back);
-
-        back.addActionListener(new ActionListener() {
+        jbBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UserApp.mainApp.setJMenuBar(Navbar.navbar);
@@ -44,6 +76,52 @@ class Upgrade {
                 upgradePage.setVisible(false);
                 UserApp.mainApp.repaint();
                 UserApp.mainApp.revalidate();
+            }
+        });
+    }
+}
+
+class PaymentPage extends JFrame {
+
+    private JPanel paymentPanel;
+    private JPanel jpHeading;
+    private JButton jbBack;
+    private JLabel jlHeading;
+    private JPanel jpInfoPayment;
+    private JLabel jlTransactionDetail;
+    private JLabel jlTier;
+    private JLabel jlMasaLangganan;
+    private JLabel jlBiaya;
+    private JLabel jlMetode;
+    private JPanel jpQris;
+    private JLabel jlIdTransaksi;
+    private JLabel jlQris;
+    private JButton jbConfirm;
+
+    PaymentPage(String tier, String harga){
+        setContentPane(paymentPanel);
+        setVisible(true);
+        setSize(1200, 800);
+        setTitle("Payment Page");
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        String idBayar = Integer.toString((int) (Math.random() * Math.pow(10, 6)));
+        jlIdTransaksi.setText(jlIdTransaksi.getText() + idBayar);
+        jlTier.setText(jlTier.getText() + tier);
+        jlBiaya.setText(jlBiaya.getText() + harga);
+
+        // Add logic for jbConfirm (Change member's tier, etc.)
+        jbConfirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        // Add logic for jbBack
+        jbBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
