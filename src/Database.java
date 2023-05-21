@@ -23,6 +23,24 @@ public class Database {
                 return db[index].getSinopsis();
         }
 
+        public int dbGetTierLimitor(String tier) {
+                int debugCounter = 0;
+                for (int i = 0; i < db.length; i++) {
+                        if (db[i] instanceof Reguler && tier.equals("reguler")) {
+                                debugCounter++;
+                                // System.out.println("true reguler " + debugCounter);
+                        } else if ((db[i] instanceof Reguler || db[i] instanceof Baru) &&
+                                        tier.equals("gold")) {
+                                debugCounter++;
+                                // System.out.println("true gold " + debugCounter);
+                        } else if (tier.equals("platinum")) {
+                                debugCounter++;
+                                // System.out.println("true platinum " + debugCounter);
+                        }
+                }
+                return debugCounter;
+        }
+
         Database() {
                 // FILM 5 TAHUN LAWAS
                 db[0] = new Reguler("Captain Indonesia", ac,
