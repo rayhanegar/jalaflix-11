@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Upgrade">
+  <grid id="27dc6" binding="upgradePanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="379" y="25" width="1207" height="1092"/>
+    </constraints>
+    <properties>
+      <background color="-1"/>
+      <preferredSize width="1200" height="800"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="1a6b7" class="javax.swing.JButton" binding="jbBack">
+        <constraints/>
+        <properties>
+          <focusable value="false"/>
+          <font name="Segoe UI" size="12" style="0"/>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Back"/>
+        </properties>
+      </component>
+      <grid id="a6c69" binding="jpHeading" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties>
+          <alignmentY value="0.0"/>
+          <background color="-1"/>
+          <focusable value="false"/>
+          <preferredSize width="1400" height="100"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="31b2f" class="javax.swing.JLabel" binding="jlHeading">
+            <constraints/>
+            <properties>
+              <background color="-1"/>
+              <focusable value="false"/>
+              <font name="Segoe UI" size="36" style="1"/>
+              <foreground color="-16777216"/>
+              <horizontalAlignment value="0"/>
+              <preferredSize width="400" height="100"/>
+              <requestFocusEnabled value="false"/>
+              <text value="Upgrade Tier"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="38482" binding="jpTierOptions" layout-manager="FlowLayout" hgap="10" vgap="20" flow-align="1">
+        <constraints/>
+        <properties>
+          <autoscrolls value="true"/>
+          <background color="-1118482"/>
+          <font name="Segoe UI" size="12" style="0"/>
+          <preferredSize width="1400" height="600"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="fa4f4" binding="jpReg" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints/>
+            <properties>
+              <background color="-1"/>
+              <focusable value="false"/>
+              <preferredSize width="300" height="400"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="42986" class="javax.swing.JLabel" binding="jlRegHeading">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="false"/>
+                  <font name="Segoe UI" size="24" style="3"/>
+                  <foreground color="-16777216"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <icon value="RocketGreen.png"/>
+                  <preferredSize width="300" height="32"/>
+                  <text value="Regular"/>
+                  <verticalTextPosition value="1"/>
+                </properties>
+              </component>
+              <component id="bd819" class="javax.swing.JLabel" binding="jlRegDesc">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI" size="14" style="0"/>
+                  <foreground color="-16777216"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="2"/>
+                  <text value="Nikmati JalaFlix tanpa ribet."/>
+                  <verifyInputWhenFocusTarget value="false"/>
+                </properties>
+              </component>
+              <vspacer id="27d8">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <vspacer id="e8a5a">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="e2fb0" class="javax.swing.JButton" binding="jbReg">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="false"/>
+                  <font name="Segoe UI" size="14" style="1"/>
+                  <text value="Rp30,000.00"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="11824" binding="jpGold" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints/>
+            <properties>
+              <background color="-1"/>
+              <inheritsPopupMenu value="false"/>
+              <preferredSize width="300" height="400"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="9c9f8" class="javax.swing.JLabel" binding="jlGoldHeading">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI" size="24" style="3"/>
+                  <foreground color="-16777216"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <icon value="RocketGold.png"/>
+                  <text value="Gold"/>
+                  <verticalTextPosition value="1"/>
+                </properties>
+              </component>
+              <component id="cde79" class="javax.swing.JLabel" binding="jlGoldDesc">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI" size="14" style="0"/>
+                  <foreground color="-16777216"/>
+                  <text value="Tonton lebih banyak koleksi JalaFlix."/>
+                </properties>
+              </component>
+              <vspacer id="6bb87">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <vspacer id="624dc">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="343c2" class="javax.swing.JButton" binding="jbGold">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <focusable value="false"/>
+                  <font name="Segoe UI" size="14" style="1"/>
+                  <text value="Rp50,000.00"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="4b7bc" binding="jpPlat" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints/>
+            <properties>
+              <background color="-1"/>
+              <focusable value="false"/>
+              <opaque value="true"/>
+              <preferredSize width="300" height="400"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="ecb10" class="javax.swing.JLabel" binding="jlPlatHeading">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI" size="24" style="3"/>
+                  <foreground color="-16777216"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <icon value="RocketPlatinum.png"/>
+                  <text value="Platinum"/>
+                  <verticalTextPosition value="1"/>
+                </properties>
+              </component>
+              <vspacer id="7e657">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="e26ef" class="javax.swing.JLabel" binding="jlPlatDesc">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI" size="14" style="0"/>
+                  <foreground color="-16777216"/>
+                  <horizontalAlignment value="0"/>
+                  <text value="Untuk anda, tanpa batas!"/>
+                </properties>
+              </component>
+              <vspacer id="a9af7">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="cef40" class="javax.swing.JButton" binding="jbPlat">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="true"/>
+                  <font name="Segoe UI" size="14" style="1"/>
+                  <text value="Rp80,000.00"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

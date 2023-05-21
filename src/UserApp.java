@@ -8,8 +8,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 // jdk-18.0.2
+// staging temp alt version
 
-class Upgrade extends JFrame{
+class Upgrade extends JFrame {
     public static JFrame upgradePage = new JFrame("Upgrade Tier");
     private JPanel upgradePanel;
     private JButton jbBack;
@@ -30,7 +31,7 @@ class Upgrade extends JFrame{
     private JButton jbPlat;
     private static String[] info = new String[2];
 
-    Upgrade(){
+    Upgrade() {
 
         upgradePage.setContentPane(upgradePanel);
         upgradePage.setSize(1200, 800);
@@ -98,7 +99,7 @@ class PaymentPage extends JFrame {
     private JLabel jlQris;
     private JButton jbConfirm;
 
-    PaymentPage(String tier, String harga){
+    PaymentPage(String tier, String harga) {
         paymentPage.setContentPane(paymentPanel);
         paymentPage.setVisible(true);
         paymentPage.setExtendedState(MAXIMIZED_BOTH);
