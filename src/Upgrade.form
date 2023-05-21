@@ -27,7 +27,7 @@
           <alignmentY value="0.0"/>
           <background color="-1"/>
           <focusable value="false"/>
-          <preferredSize width="1400" height="100"/>
+          <preferredSize width="1200" height="100"/>
         </properties>
         <border type="none"/>
         <children>
@@ -39,7 +39,7 @@
               <font name="Segoe UI" size="36" style="1"/>
               <foreground color="-16777216"/>
               <horizontalAlignment value="0"/>
-              <preferredSize width="400" height="100"/>
+              <preferredSize width="1200" height="60"/>
               <requestFocusEnabled value="false"/>
               <text value="Upgrade Tier"/>
             </properties>

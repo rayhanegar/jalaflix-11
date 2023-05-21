@@ -29,7 +29,7 @@ class Upgrade extends JFrame {
     private JButton jbReg;
     private JButton jbGold;
     private JButton jbPlat;
-    private static String[] info = new String[2];
+    static String[] paymentInfo = new String[3];
 
     Upgrade() {
 
@@ -44,27 +44,30 @@ class Upgrade extends JFrame {
         jbReg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                info[0] = "Regular";
-                info[1] = "Rp30,000.00";
-                new PaymentPage(info[0], info[1]);
+                paymentInfo[0] = "Regular";
+                paymentInfo[1] = "Rp30,000.00";
+                paymentInfo[2] = "reguler";
+                new PaymentPage(paymentInfo[0], paymentInfo[1], paymentInfo[2]);
             }
         });
 
         jbGold.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                info[0] = "Gold";
-                info[1] = "Rp50,000.00";
-                new PaymentPage(info[0], info[1]);
+                paymentInfo[0] = "Gold";
+                paymentInfo[1] = "Rp50,000.00";
+                paymentInfo[2] = "gold";
+                new PaymentPage(paymentInfo[0], paymentInfo[1], paymentInfo[2]);
             }
         });
 
         jbPlat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                info[0] = "Platinum";
-                info[1] = "Rp80,000.00";
-                new PaymentPage(info[0], info[1]);
+                paymentInfo[0] = "Platinum";
+                paymentInfo[1] = "Rp80,000.00";
+                paymentInfo[2] = "platinum";
+                new PaymentPage(paymentInfo[0], paymentInfo[1], paymentInfo[2]);
             }
         });
 
@@ -99,7 +102,7 @@ class PaymentPage extends JFrame {
     private JLabel jlQris;
     private JButton jbConfirm;
 
-    PaymentPage(String tier, String harga) {
+    PaymentPage(String namaTier, String harga, String tier) {
         paymentPage.setContentPane(paymentPanel);
         paymentPage.setVisible(true);
         paymentPage.setExtendedState(MAXIMIZED_BOTH);
@@ -108,14 +111,51 @@ class PaymentPage extends JFrame {
         paymentPage.setDefaultCloseOperation(HIDE_ON_CLOSE);
         String idBayar = Integer.toString((int) (Math.random() * Math.pow(10, 6)));
         jlIdTransaksi.setText(jlIdTransaksi.getText() + idBayar);
-        jlTier.setText(jlTier.getText() + tier);
+        jlTier.setText(jlTier.getText() + namaTier);
         jlBiaya.setText(jlBiaya.getText() + harga);
 
         // Add logic for jbConfirm (Change member's tier, etc.)
         jbConfirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int userIndex = UserApp.indexCurrentUser;
+                switch (tier){
+                    case "reguler":
+                        Pengguna.dbPengguna[userIndex].setTier("reguler");
+                        break;
+                    case "gold":
+                        Pengguna.dbPengguna[userIndex].setTier("gold");
+                        break;
+                    default:
+                        Pengguna.dbPengguna[userIndex].setTier("platinum");
+                }
 
+                JPanel jpConfirm = new JPanel(new FlowLayout());
+                jpConfirm.setSize(1200, 800);
+                JLabel jlConfirm = new JLabel("Yeay! Tier membership anda kini " + Upgrade.paymentInfo[0]);
+                jlConfirm.setIcon(new ImageIcon("Yeay.png"));
+                jlConfirm.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                jlConfirm.setVerticalTextPosition(SwingConstants.TOP);
+                jlConfirm.setHorizontalTextPosition(SwingConstants.CENTER);
+                JButton jbYeay = new JButton("OK, Login Ulang");
+                jbYeay.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Login.logUser.setVisible(true);
+                        Login.logUser.repaint();
+                        Login.logUser.revalidate();
+                        setVisible(false);
+                        paymentPage.setVisible(false);
+                        Upgrade.upgradePage.setVisible(false);
+                        UserApp.mainApp.repaint();
+                        UserApp.mainApp.revalidate();
+                    }
+                });
+
+                jpConfirm.add(jlConfirm);
+                jpConfirm.add(jbYeay);
+                jpConfirm.setVisible(true);
+                paymentPage.setContentPane(jpConfirm);
             }
         });
 
@@ -556,6 +596,7 @@ class Login {
                         Pengguna.dbPengguna[userCount] = new Pengguna(kode, usernameInput, AgeInput, phoneInput,
                                 "reguler", true);
                         UserApp.currentUser = Pengguna.dbPengguna[userCount];
+                        UserApp.indexCurrentUser = userCount;
                         System.out.println("user ke-" + userCount);
                         userCount++;
 
@@ -577,10 +618,12 @@ class Login {
                                     if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
                                         // set current user
                                         UserApp.currentUser = Pengguna.dbPengguna[j];
+                                        UserApp.indexCurrentUser = j;
                                         System.out.println("user ke-" + j);
                                         break;
                                     }
                                 }
+
                                 System.out.println("User ada");
 
                                 // kosongkan field
@@ -774,6 +817,7 @@ class MainPage {
 public class UserApp {
     public static JFrame mainApp = new JFrame("Jalaflix-11");
     public static Pengguna currentUser;
+    public static int indexCurrentUser;
     public static String tierCurrentUser;
     public static JScrollPane jsp = new JScrollPane(MainPage.movieHandler,
             ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,

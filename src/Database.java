@@ -23,10 +23,18 @@ public class Database {
         return db[index].getSinopsis();
     }
 
+    /**
+     * Seleksi berdasarkan tier pengguna
+     * 1. Untuk tier "reg": 12 film pertama (debugCounter = 12)
+     * 2. Untuk tier "gold": 12+12 film pertama (debugCounter = 24)
+     * 3. Untuk tier "platinum": 12 + 12 + 12 film pertama (debug counter = 36)
+     *
+     * Urutan film dalam db[] sudah diatur sedemikian rupa sesuai dengan ketentuan di atas.
+     */
     public int dbGetTierLimitor(String tier) {
         int debugCounter = 0;
         for (int i = 0; i < db.length; i++) {
-            if (db[i] instanceof Reguler && tier.equals("reguler")) {
+            if (db[i] instanceof Reguler && tier.equals("reg")) {
                 debugCounter++;
                 // System.out.println("true reguler " + debugCounter);
             } else if ((db[i] instanceof Reguler || db[i] instanceof Baru) &&
