@@ -4,12 +4,13 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
 // jdk-18.0.2
 
-class Upgrade extends JFrame{
+class Upgrade extends JFrame {
     public static JFrame upgradePage = new JFrame("Upgrade Tier");
     private JPanel upgradePanel;
     private JButton jbBack;
@@ -30,7 +31,7 @@ class Upgrade extends JFrame{
     private JButton jbPlat;
     private static String[] info = new String[2];
 
-    Upgrade(){
+    Upgrade() {
 
         upgradePage.setContentPane(upgradePanel);
         upgradePage.setSize(1200, 800);
@@ -98,7 +99,7 @@ class PaymentPage extends JFrame {
     private JLabel jlQris;
     private JButton jbConfirm;
 
-    PaymentPage(String tier, String harga){
+    PaymentPage(String tier, String harga) {
         paymentPage.setContentPane(paymentPanel);
         paymentPage.setVisible(true);
         paymentPage.setExtendedState(MAXIMIZED_BOTH);
@@ -134,27 +135,44 @@ class PaymentPage extends JFrame {
 class History {
     public static JFrame historyPage = new JFrame("History page");
     public static JPanel historyPanel = new JPanel();
+    public static JPanel historyInfoPanel = new JPanel();
+    private static JLabel movieHistoryLabel[];
+    private static JPanel movieHistoryPanel[];
+    private static Film historyBucket[];
+    private static final int MAX_BUCKET_ITEM = 8;
+    private static Border b = BorderFactory.createEmptyBorder(36, 36, 36, 36);
+    private static GridLayout gl = new GridLayout(0, 4, 16, 16);
+    private static Border parent = BorderFactory.createEmptyBorder(12, 36, 36, 36);
 
     History() {
-        JLabel test = new JLabel("Halo dari history page");
+        movieHistoryLabel = new JLabel[MAX_BUCKET_ITEM];
+        movieHistoryPanel = new JPanel[MAX_BUCKET_ITEM];
+        historyBucket = new Film[MAX_BUCKET_ITEM];
 
+        JLabel test = new JLabel("Sepuluh film yang baru saja Anda tonton!");
         JButton back = new JButton("go back");
-
-        FlowLayout fl = new FlowLayout();
-        GridLayout gl = new GridLayout(0, 4, 16, 0);
+        test.setAlignmentX(Component.CENTER_ALIGNMENT);
+        back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        test.setFont(new Font("Segoe UI", Font.BOLD, 18));
 
         historyPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         historyPage.setTitle("Baru saja ditonton");
         historyPage.setJMenuBar(Navbar.navbar);
         historyPage.setSize(1200, 800);
-        historyPanel.setLayout(gl);
-        historyPage.setLayout(fl);
+
+        historyPage.getContentPane().setLayout(new BoxLayout(historyPage.getContentPane(), BoxLayout.Y_AXIS));
         historyPage.setVisible(false);
         historyPage.setResizable(true);
         historyPage.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        historyPage.add(test);
-        historyPage.add(back);
+        // historyInfoPanel.setBounds(36, 36, 1920, 1080);
+        historyInfoPanel.setBorder(b);
+        historyInfoPanel.setLayout(new BoxLayout(historyInfoPanel, BoxLayout.Y_AXIS));
+        historyInfoPanel.add(back);
+        historyInfoPanel.add(test);
+        // historyInfoPanel.setBackground(Color.BLUE);
+
+        historyPage.add(historyInfoPanel);
 
         back.addActionListener(new ActionListener() {
             @Override
@@ -169,15 +187,28 @@ class History {
     }
 
     public static void paintMovieHistory(Pengguna currentUser) {
-        JLabel movieHistoryLabel[] = new JLabel[currentUser.getHistoryCount()];
-        Film temp[] = UserApp.currentUser.getRecentHistory();
-        for (int i = 0; i < movieHistoryLabel.length; i++) {
-            movieHistoryLabel[i] = new JLabel(temp[i].getJudul());
-            movieHistoryLabel[i].setPreferredSize(new Dimension(250, 48));
-            historyPanel.setPreferredSize(new Dimension(1920 / 4, 48));
-            historyPanel.setBackground(Color.WHITE);
-            historyPanel.add(movieHistoryLabel[i]);
+        historyBucket = currentUser.getRecentHistory();
+        historyPanel.removeAll();
+        historyPanel.setLayout(gl);
+        historyPanel.setBorder(parent);
+        for (int i = 0; i < historyBucket.length; i++) {
+            if (historyBucket[i] != null) {
+                movieHistoryPanel[i] = new JPanel();
+                movieHistoryPanel[i].setBorder(b);
+                movieHistoryLabel[i] = new JLabel(historyBucket[i].getJudul());
+                movieHistoryLabel[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
+                movieHistoryPanel[i].setLayout(new BoxLayout(movieHistoryPanel[i], BoxLayout.Y_AXIS));
+                movieHistoryLabel[i].setPreferredSize(new Dimension(250, 24));
+                movieHistoryPanel[i].setPreferredSize(new Dimension(250, 48));
+                movieHistoryPanel[i].setBackground(Color.WHITE);
+                movieHistoryPanel[i].add(movieHistoryLabel[i]);
+                historyPanel.setPreferredSize(new Dimension(1920, 100));
+                historyPanel.add(movieHistoryPanel[i]);
+            }
         }
+
+        // historyPanel.setBackground(Color.RED);
+
         historyPage.add(historyPanel);
     }
 
@@ -191,10 +222,10 @@ class Navbar {
     public static JMenuItem logout = new JMenuItem("Logout");
 
     Navbar() {
-        account.setFont(new Font("Arial", Font.PLAIN, 18));
-        upgrade.setFont(new Font("Arial", Font.PLAIN, 18));
-        history.setFont(new Font("Arial", Font.PLAIN, 18));
-        logout.setFont(new Font("Arial", Font.PLAIN, 18));
+        account.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        upgrade.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        history.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        logout.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         account.add(upgrade);
         account.add(history);
         account.add(logout);
@@ -251,11 +282,9 @@ class Login {
     private static int userCount = 0;
 
     Login() {
-        logUser.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         // read db
         try {
-            String init_data = "user01 password01 user02 password02";
+            String init_data = "000000 dummy dummy 0 0000 reguler true ";
             File dbUser = new File(db);
             if (dbUser.createNewFile()) {
                 System.out.println("File successfully created");
@@ -309,6 +338,9 @@ class Login {
 
         String ages[] = { "0-7", "8-12", "13-17", "18-21", "21+" };
 
+        JPanel dummy = new JPanel();
+        dummy.setPreferredSize(new Dimension(1920, 60));
+
         JLabel usernameLabel = new JLabel("username");
         JLabel passwordLabel = new JLabel("password");
         JLabel ageLabel = new JLabel("umur*");
@@ -325,6 +357,22 @@ class Login {
         JPanel passwordPanel = new JPanel();
         JPanel agePanel = new JPanel();
         JPanel phonePanel = new JPanel();
+
+        usernameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        ageLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        phoneLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        info.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        log.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        usernameField.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        passwordField.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        ageField.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        phoneField.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        usernameLabel.setPreferredSize(new Dimension(100, 36));
+        passwordLabel.setPreferredSize(new Dimension(100, 36));
+        ageLabel.setPreferredSize(new Dimension(100, 36));
+        phoneLabel.setPreferredSize(new Dimension(100, 36));
 
         usernameField.setPreferredSize(new Dimension(350, 36));
         passwordField.setPreferredSize(new Dimension(350, 36));
@@ -344,6 +392,7 @@ class Login {
         phonePanel.add(phoneField);
 
         JButton logMeIn = new JButton("create and/or login");
+        logMeIn.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
         // FlowLayout fl = new FlowLayout();
         // GridLayout gl = new GridLayout(0, 1, 0, 16);
@@ -358,12 +407,14 @@ class Login {
         info.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         log.setPreferredSize(new Dimension(logUser.getWidth(), 36));
         log.setEditable(false);
-        log.setFont(new Font("Arial", Font.PLAIN, 12));
 
         // logUser.setLayout();
+        logUser.setExtendedState(JFrame.MAXIMIZED_BOTH);
         logUser.setVisible(true);
         logUser.setResizable(true);
         logUser.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        logPanel.add(dummy);
 
         logPanel.add(usernamePanel);
         logPanel.add(passwordPanel);
@@ -509,12 +560,7 @@ class Login {
                         userCount++;
 
                         // habis itu langsung masuk
-                        System.out.println("selamat bergabung, " + UserApp.currentUser.getNama());
-                        UserApp.mainApp.setJMenuBar(Navbar.navbar);
-                        UserApp.mainApp.setVisible(true);
-                        logUser.setVisible(false);
-                        UserApp.mainApp.repaint();
-                        UserApp.mainApp.revalidate();
+                        loginTransition(0);
                         return;
                     }
 
@@ -531,7 +577,6 @@ class Login {
                                     if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
                                         // set current user
                                         UserApp.currentUser = Pengguna.dbPengguna[j];
-                                        UserApp.currentUserIndex = j;
                                         System.out.println("user ke-" + j);
                                         break;
                                     }
@@ -545,12 +590,7 @@ class Login {
                                 phoneField.setText("");
 
                                 // habis itu langsung masuk
-                                System.out.println("halo, " + UserApp.currentUser.getNama());
-                                UserApp.mainApp.setJMenuBar(Navbar.navbar);
-                                UserApp.mainApp.setVisible(true);
-                                logUser.setVisible(false);
-                                UserApp.mainApp.repaint();
-                                UserApp.mainApp.revalidate();
+                                loginTransition(1);
                                 return;
                             } else {
                                 log.setText("User tidak ada atau password salah");
@@ -565,106 +605,97 @@ class Login {
             }
         });
     }
+
+    public void loginTransition(int i) {
+        switch (i) {
+            case 0:
+                System.out.println("selamat bergabung, " + UserApp.currentUser.getNama());
+                break;
+            case 1:
+                System.out.println("halo, " + UserApp.currentUser.getNama());
+                break;
+            default:
+                ;
+        }
+
+        UserApp.tierCurrentUser = UserApp.currentUser.getTier();
+        System.out.println(UserApp.tierCurrentUser);
+        MainPage.arrangeAllMoviePanels(UserApp.tierCurrentUser);
+
+        UserApp.mainApp.setJMenuBar(Navbar.navbar);
+        UserApp.mainApp.setVisible(true);
+        logUser.setVisible(false);
+        UserApp.mainApp.repaint();
+        UserApp.mainApp.revalidate();
+    }
 }
 
-public class UserApp {
-    public static JFrame mainApp = new JFrame("Jalaflix-11");
-    public static Pengguna currentUser;
-    public static int currentUserIndex;
+class MainPage {
+    private static Database db = new Database();
+    private static int banyakFilm = db.dbGetBanyakFilm();
+    private static Color white = new Color(255, 255, 255);
+    private static JPanel movies[] = new JPanel[banyakFilm];
+    private static JTextArea infoText[] = new JTextArea[banyakFilm];
+    private static GridLayout gl = new GridLayout(0, 4, 16, 16);
+    public static JPanel movieHandler = new JPanel(gl);
+    private static Border b = BorderFactory.createEmptyBorder(36, 36, 36, 36);
+    private static Border b2 = BorderFactory.createEmptyBorder(36, 36, 36, 36);
+    private static Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
 
-    public static void main(String[] args) {
-
-        // var
-        Database db = new Database();
-        int banyakFilm = db.dbGetBanyakFilm();
-        Color white = new Color(255, 255, 255);
-
-        // array untuk store JPanel[] tiap film
-        JPanel movies[] = new JPanel[banyakFilm];
-
-        // array untuk store JTextArea[] tiap film
-        JTextArea infoText[] = new JTextArea[banyakFilm];
-
-        // content and layout
-        GridLayout gl = new GridLayout(0, 4, 16, 16);
-        // GridLayout gl2 = new GridLayout(2, 1);
-
-        // instance all pages
-        new Login();
-        new Navbar();
-        new Upgrade();
-        new History();
-
-        // JButton logout = new JButton("Log out");
-        JPanel movieHandler = new JPanel(gl);
-
-        // JPanel navbar = new JPanel();
-        JScrollPane jsp = new JScrollPane(movieHandler,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jsp.getVerticalScrollBar().setUnitIncrement(12);
-        jsp.getHorizontalScrollBar().setUnitIncrement(8);
-
-        // navbar itu diinisialisasi di sini
-
-        // border
-        Border b = BorderFactory.createEmptyBorder(36, 36, 36, 36);
-        Border b2 = BorderFactory.createEmptyBorder(0, 0, 36, 0);
-        Border b3 = BorderFactory.createEmptyBorder(0, 12, 0, 0);
-
+    MainPage() {
         // prelim set window
-        mainApp.setSize(1200, 800); // main program window
+        UserApp.mainApp.setSize(1200, 800); // main program window
 
         movieHandler.setSize(1200, 800); // isinya film
-        // logout.setSize(mainApp.getWidth(), 100);
-
-        // login doang
 
         // aplikasi utama
-        mainApp.setVisible(false);
-        mainApp.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainApp.setResizable(true);
-        mainApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        UserApp.mainApp.setVisible(false);
+        UserApp.mainApp.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        UserApp.mainApp.setResizable(true);
+        UserApp.mainApp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // navbar.add(logout);
         movieHandler.setBorder(b);
 
         // urusan dengan yth. navbar
         Navbar.navbar.setBorder(b3);
-        mainApp.setJMenuBar(Navbar.navbar);
+        UserApp.mainApp.setJMenuBar(Navbar.navbar);
 
         // logic
-        /**
-         * Mengisi movieHandler dengan panel untuk masing-masing film
-         * 1) Mengiterasi untuk setiap film yang ada di movies[]
-         * 2)
-         */
+        // arrangeAllMoviePanels("platinum");
 
-        for (int i = 0; i < movies.length; i++) {
+        // mainApp.add(navbar);
 
-            /**
-             * Melakukan seleksi film sesuai dengan tier pengguna, sebagai berikut:
-             * 1. Untuk tier regular: film dengan genre
-             */
+        // Login.logUser.repaint();
+        // UserApp.mainApp.repaint();
+        // UserApp.mainApp.revalidate();
+    }
+
+    public static void arrangeAllMoviePanels(String tier) {
+        movieHandler.removeAll();
+        int limitor = db.dbGetTierLimitor(tier);
+        System.out.println(limitor);
+        for (int i = 0; i < limitor; i++) {
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
             infoText[i] = new JTextArea(db.dbGetJudul(i));
-            infoText[i].setPreferredSize(new Dimension(160, 12));
+            infoText[i].setPreferredSize(new Dimension(200, 12));
             infoText[i].setLineWrap(true);
             infoText[i].setWrapStyleWord(true);
             infoText[i].setEditable(false);
-            infoText[i].setFont(new Font("Arial", Font.BOLD, 24));
+            infoText[i].setFont(new Font("Segoe UI", Font.BOLD, 24));
 
             JTextArea sinopsisText = new JTextArea(db.dbGetSinopsis(i));
             sinopsisText.setPreferredSize(new Dimension(200, 24));
             sinopsisText.setLineWrap(true);
             sinopsisText.setWrapStyleWord(true);
             sinopsisText.setEditable(false);
-            sinopsisText.setFont(new Font("Arial", Font.PLAIN, 12));
+            sinopsisText.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
             movies[i].setPreferredSize(new Dimension(200, 360));
             movies[i].setBackground(white);
 
             JButton tombolTonton = new JButton("Tonton");
+            tombolTonton.setFont(new Font("Segoe UI", Font.BOLD, 18));
             tombolTonton.setActionCommand(String.valueOf(i));
 
             movies[i].setLayout(new BoxLayout(movies[i], BoxLayout.Y_AXIS));
@@ -680,36 +711,40 @@ public class UserApp {
                 String judulFilm = db.dbGetJudul(filmIndex);
 
                 // masukkan film ke history pengguna
-                currentUser.setIndexHistory(filmIndex);
+                UserApp.currentUser.setIndexHistory(filmIndex);
 
                 JButton back = new JButton("go back");
 
                 JFrame newFrame = new JFrame(judulFilm);
                 newFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur JFrame menjadi fullscreen
+                newFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
                 // Membuat panel utama dengan layout manager BorderLayout
-                JPanel mainPanel = new JPanel(new BorderLayout());
+                JPanel mainPanel = new JPanel();
+                mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
                 // Membuat JPanel untuk menyimpan teks dan mengatur layout manager-nya menjadi
                 // FlowLayout
                 JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 JLabel labelSelamatMenonton = new JLabel("Selamat menonton :)");
-                labelSelamatMenonton.setFont(new Font("Arial", Font.BOLD, 18));
+                labelSelamatMenonton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+                back.setSize(new Dimension(120, 36));
+                topPanel.add(back);
                 topPanel.add(labelSelamatMenonton);
 
                 // Menambahkan JPanel ke panel utama
-                mainPanel.add(topPanel, BorderLayout.NORTH);
+                mainPanel.add(topPanel);
 
                 // Menambahkan gambar ke dalam JLabel dan menempatkannya di tengah
-                ImageIcon icon = new ImageIcon("JALAFLIX-11/jalaflix.png"); // Ganti dengan path sesuai dengan lokasi
-                                                                            // gambar Anda
-                JLabel labelGambar = new JLabel(icon);
+                JLabel labelGambar = new JLabel();
+                ImageIcon icon = new ImageIcon("/resources/jalaflix.png");
+                icon = new ImageIcon(icon.getImage().getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
+                labelGambar.setIcon(icon);
                 labelGambar.setHorizontalAlignment(JLabel.CENTER);
-                mainPanel.add(labelGambar, BorderLayout.CENTER);
+                labelGambar.setBackground(Color.BLUE);
+                mainPanel.add(labelGambar);
 
                 // tombol untuk kembali dari nonton film
-                back.setSize(new Dimension(120, 36));
-                mainPanel.add(back);
 
                 back.addActionListener(new ActionListener() {
                     @Override
@@ -724,15 +759,38 @@ public class UserApp {
 
                 newFrame.getContentPane().add(mainPanel); // Menambahkan panel utama ke dalam content pane JFrame
                 newFrame.setVisible(true);
+                newFrame.repaint();
+                newFrame.revalidate();
             });
-
         }
+        UserApp.jsp.revalidate();
+        UserApp.jsp.repaint();
+        UserApp.mainApp.revalidate();
+        UserApp.mainApp.repaint();
+        UserApp.jsp.getVerticalScrollBar().setValue(UserApp.jsp.getVerticalScrollBar().getMinimum());
+    }
+}
 
-        // mainApp.add(navbar);
+public class UserApp {
+    public static JFrame mainApp = new JFrame("Jalaflix-11");
+    public static Pengguna currentUser;
+    public static String tierCurrentUser;
+    public static JScrollPane jsp = new JScrollPane(MainPage.movieHandler,
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    public static void main(String[] args) {
+        // instance all pages
+        new Login();
+        new Navbar();
+        new MainPage();
+        jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMinimum());
+        jsp.getVerticalScrollBar().setUnitIncrement(16);
+        jsp.getHorizontalScrollBar().setUnitIncrement(12);
         mainApp.add(jsp);
 
-        Login.logUser.repaint();
-        mainApp.repaint();
-        mainApp.revalidate();
+        new Upgrade();
+        new History();
+        System.out.println("Semua page berhasil terinstansiasikan");
     }
 }
