@@ -454,14 +454,17 @@ class Login {
                     }
                     System.out.println("debug end");
 
+                    // Check apakah usernameInput ada di usernameAll
                     int counter = 0;
                     for (int i = 0; i < usernameAll.size(); i++) {
                         if (usernameAll.get(i).equals(usernameInput)) {
+                            // Jika usernameInput ada di usernameAll, counter++
                             counter++;
                         }
                     }
 
                     // urusan dengan akun
+                    // Jika usernameInput tidak ada di usernameAll, counter == 0
                     if (counter == 0) {
                         // buat akun baru
                         if (phoneInput.equals("")) {
@@ -469,6 +472,8 @@ class Login {
                             System.out.println("Nomor telepon tidak boleh kosong saat pendaftaran");
                             return;
                         }
+
+                        // menambahkan user pada db
                         FileWriter fw = new FileWriter(db);
                         fw.write(data + kode + " " + usernameInput + " " + passwordInput + " " + AgeInput + " "
                                 + phoneInput + " " + "reguler" + " " + true + " ");
@@ -493,6 +498,10 @@ class Login {
                         phoneField.setText("");
 
                         // bikin kelas pelanggan baru
+                        /**
+                         * Menginstansiasi Pengguna baru pada indeks ke-userCount di dalam dbPengguna.
+                         * Melakukan increment userCount
+                         */
                         Pengguna.dbPengguna[userCount] = new Pengguna(kode, usernameInput, AgeInput, phoneInput,
                                 "reguler", true);
                         UserApp.currentUser = Pengguna.dbPengguna[userCount];
@@ -507,7 +516,14 @@ class Login {
                         UserApp.mainApp.repaint();
                         UserApp.mainApp.revalidate();
                         return;
-                    } else {
+                    }
+
+                    /**Jika ditemukan usernameInput di dalam usernameAll
+                    counter == 1
+                     */
+
+                    else {
+                        // Mencari indeks usernameInput dan passwordInput di dalam usernameAll dan passwordAll
                         for (int i = 0; i < usernameAll.size(); i++) {
                             if (usernameAll.get(i).equals(usernameInput)
                                     && passwordAll.get(i).equals(passwordInput)) {
@@ -515,6 +531,7 @@ class Login {
                                     if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
                                         // set current user
                                         UserApp.currentUser = Pengguna.dbPengguna[j];
+                                        UserApp.currentUserIndex = j;
                                         System.out.println("user ke-" + j);
                                         break;
                                     }
@@ -553,13 +570,19 @@ class Login {
 public class UserApp {
     public static JFrame mainApp = new JFrame("Jalaflix-11");
     public static Pengguna currentUser;
+    public static int currentUserIndex;
 
     public static void main(String[] args) {
+
         // var
         Database db = new Database();
         int banyakFilm = db.dbGetBanyakFilm();
         Color white = new Color(255, 255, 255);
+
+        // array untuk store JPanel[] tiap film
         JPanel movies[] = new JPanel[banyakFilm];
+
+        // array untuk store JTextArea[] tiap film
         JTextArea infoText[] = new JTextArea[banyakFilm];
 
         // content and layout
@@ -574,6 +597,7 @@ public class UserApp {
 
         // JButton logout = new JButton("Log out");
         JPanel movieHandler = new JPanel(gl);
+
         // JPanel navbar = new JPanel();
         JScrollPane jsp = new JScrollPane(movieHandler,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
@@ -609,7 +633,18 @@ public class UserApp {
         mainApp.setJMenuBar(Navbar.navbar);
 
         // logic
+        /**
+         * Mengisi movieHandler dengan panel untuk masing-masing film
+         * 1) Mengiterasi untuk setiap film yang ada di movies[]
+         * 2)
+         */
+
         for (int i = 0; i < movies.length; i++) {
+
+            /**
+             * Melakukan seleksi film sesuai dengan tier pengguna, sebagai berikut:
+             * 1. Untuk tier regular: film dengan genre
+             */
             movies[i] = new JPanel();
             movies[i].setBorder(b2);
             infoText[i] = new JTextArea(db.dbGetJudul(i));
