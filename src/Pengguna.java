@@ -145,7 +145,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         return tier;
     }
 
-    private void setTier(String tier) {
+    public void setTier(String tier) {
         this.tier = tier;
     }
 
