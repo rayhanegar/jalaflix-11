@@ -83,6 +83,7 @@ class Upgrade extends JFrame{
 
 class PaymentPage extends JFrame {
 
+    static JFrame paymentPage = new JFrame();
     private JPanel paymentPanel;
     private JPanel jpHeading;
     private JButton jbBack;
@@ -99,11 +100,12 @@ class PaymentPage extends JFrame {
     private JButton jbConfirm;
 
     PaymentPage(String tier, String harga){
-        setContentPane(paymentPanel);
-        setVisible(true);
-        setSize(1200, 800);
-        setTitle("Payment Page");
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        paymentPage.setContentPane(paymentPanel);
+        paymentPage.setVisible(true);
+        paymentPage.setExtendedState(MAXIMIZED_BOTH);
+        paymentPage.setSize(1200, 800);
+        paymentPage.setTitle("Payment Page");
+        paymentPage.setDefaultCloseOperation(HIDE_ON_CLOSE);
         String idBayar = Integer.toString((int) (Math.random() * Math.pow(10, 6)));
         jlIdTransaksi.setText(jlIdTransaksi.getText() + idBayar);
         jlTier.setText(jlTier.getText() + tier);
@@ -121,7 +123,11 @@ class PaymentPage extends JFrame {
         jbBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Upgrade.upgradePage.setJMenuBar(Navbar.navbar);
+                Upgrade.upgradePage.setVisible(true);
+                Upgrade.upgradePage.setVisible(false);
+                Upgrade.upgradePage.repaint();
+                Upgrade.upgradePage.revalidate();
             }
         });
     }
@@ -194,7 +200,6 @@ class Navbar {
         account.add(upgrade);
         account.add(history);
         account.add(logout);
-
         navbar.add(account);
 
         Navbar.logout.addActionListener(new ActionListener() {
