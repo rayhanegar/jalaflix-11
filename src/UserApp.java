@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 // jdk-18.0.2
 // temp alt version
@@ -30,7 +32,7 @@ class Upgrade extends JFrame {
     private JButton jbReg;
     private JButton jbGold;
     private JButton jbPlat;
-    private static String[] info = new String[2];
+    private static String[] info = new String[3];
 
     Upgrade() {
 
@@ -47,7 +49,8 @@ class Upgrade extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 info[0] = "Regular";
                 info[1] = "Rp30,000.00";
-                new PaymentPage(info[0], info[1]);
+                info[2] = "reguler";
+                new PaymentPage(info[0], info[1], info[2]);
             }
         });
 
@@ -56,7 +59,8 @@ class Upgrade extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 info[0] = "Gold";
                 info[1] = "Rp50,000.00";
-                new PaymentPage(info[0], info[1]);
+                info[2] = "gold";
+                new PaymentPage(info[0], info[1], info[2]);
             }
         });
 
@@ -65,7 +69,8 @@ class Upgrade extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 info[0] = "Platinum";
                 info[1] = "Rp80,000.00";
-                new PaymentPage(info[0], info[1]);
+                info[2] = "platinum";
+                new PaymentPage(info[0], info[1], info[2]);
             }
         });
 
@@ -100,7 +105,7 @@ class PaymentPage extends JFrame {
     private JLabel jlQris;
     private JButton jbConfirm;
 
-    PaymentPage(String tier, String harga) {
+    PaymentPage(String namaTier, String harga, String tier) {
         paymentPage.setContentPane(paymentPanel);
         paymentPage.setVisible(true);
         paymentPage.setExtendedState(MAXIMIZED_BOTH);
@@ -109,14 +114,29 @@ class PaymentPage extends JFrame {
         paymentPage.setDefaultCloseOperation(HIDE_ON_CLOSE);
         String idBayar = Integer.toString((int) (Math.random() * Math.pow(10, 6)));
         jlIdTransaksi.setText(jlIdTransaksi.getText() + idBayar);
-        jlTier.setText(jlTier.getText() + tier);
+        jlTier.setText(jlTier.getText() + namaTier);
         jlBiaya.setText(jlBiaya.getText() + harga);
 
         // Add logic for jbConfirm (Change member's tier, etc.)
         jbConfirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Login.dbModified[UserApp.tierIndexCurrentUser] = tier;
+                } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
+                    // add pop-up buat relaunch aplikasi.
 
+                }
+                try {
+                    String toBeWritten = String.join(" ", Login.dbModified);
+                    FileWriter fw = new FileWriter(Login.db, false);
+                    fw.write(toBeWritten + " ");
+                    fw.close();
+                    System.out.println("Database successfully overwritten.");
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -276,10 +296,11 @@ class Navbar {
 }
 
 class Login {
+    public static String[] dbModified;
     public static JFrame logUser = new JFrame("Login/Register");
     public static JPanel logPanel = new JPanel();
 
-    private static final String db = "user_database_jalaflix_11.txt";
+    public static final String db = "user_database_jalaflix_11.txt";
     private static int userCount = 0;
 
     Login() {
@@ -325,12 +346,14 @@ class Login {
 
             // splitting....
             String dbRaw[] = data.split(" ");
+            dbModified = dbRaw;
 
             // instance the users every time program starts
             for (int i = 0; i < dbRaw.length / 7; i++) {
                 Pengguna.dbPengguna[i] = new Pengguna(dbRaw[i + (6 * i)], dbRaw[i + (6 * i + 1)],
                         Integer.parseInt(dbRaw[i + (6 * i + 3)]), dbRaw[i + (6 * i + 4)], dbRaw[i + (6 * i + 5)],
                         Boolean.parseBoolean(dbRaw[i + (6 * i + 6)]));
+                userCount++;
             }
         } catch (Exception e) {
             System.out.println("I/O error atau instancec user tidak dibuat");
@@ -525,6 +548,21 @@ class Login {
                         fw.write(data + kode + " " + usernameInput + " " + passwordInput + " " + AgeInput + " "
                                 + phoneInput + " " + "reguler" + " " + true + " ");
                         fw.close();
+
+                        /**
+                         * Dilakukan re-read database yang sudah ditambahkan pengguna baru,
+                         * disimpan di dalam String[] dbModified.
+                         * String[] dbModified akan digunakan untuk mengganti tier saat pengguna
+                         * melakukan payment upgrade.
+                         */
+
+                        Scanner sc = new Scanner(db);
+                        String newDb = "";
+                        while(sc.hasNextLine()){
+                            newDb = sc.nextLine();
+                        }
+                        dbModified = newDb.split(" ");
+                        sc.close();
                         System.out.println("User berhasil ditambahkan");
 
                         /**
@@ -548,6 +586,8 @@ class Login {
                         Pengguna.dbPengguna[userCount] = new Pengguna(kode, usernameInput, AgeInput, phoneInput,
                                 "reguler", true);
                         UserApp.currentUser = Pengguna.dbPengguna[userCount];
+                        UserApp.indexCurrentUser = userCount;
+                        UserApp.tierIndexCurrentUser = UserApp.indexCurrentUser + (6 * UserApp.indexCurrentUser + 5);
                         System.out.println("user ke-" + userCount);
                         userCount++;
 
@@ -562,6 +602,8 @@ class Login {
                                     if (Pengguna.dbPengguna[j].getNama().equals(usernameInput)) {
                                         // set current user
                                         UserApp.currentUser = Pengguna.dbPengguna[j];
+                                        UserApp.indexCurrentUser = j;
+                                        UserApp.tierIndexCurrentUser = j + (6 * j + 5);
                                         System.out.println("user ke-" + j);
                                         break;
                                     }
@@ -759,6 +801,8 @@ class MainPage {
 public class UserApp {
     public static JFrame mainApp = new JFrame("Jalaflix-11");
     public static Pengguna currentUser;
+    public static int indexCurrentUser;
+    public static int tierIndexCurrentUser;
     public static String tierCurrentUser;
     public static JScrollPane jsp = new JScrollPane(MainPage.movieHandler,
             ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
