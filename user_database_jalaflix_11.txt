@@ -1,1 +1,1 @@
-215354 test1 pass 7 123 gold true 215354 test2 pass 7 123 platinum true 215354 test3 pass 7 123 gold true 404032 test4 pass 7 123 gold true 482179 test5 pass 7 123 platinum true 859955 test6 pass 7 123 reguler true 
+215354 test1 pass 7 123 gold true 215354 test2 pass 7 123 platinum true 215354 test3 pass 7 123 gold true 404032 test4 pass 7 123 gold true 482179 test5 pass 7 123 platinum true 859955 test6 pass 7 123 reguler true
