@@ -33,7 +33,6 @@ class Upgrade extends JFrame{
     Upgrade(){
 
         upgradePage.setContentPane(upgradePanel);
-//        setContentPane(upgradePanel);
         upgradePage.setSize(1200, 800);
         upgradePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         upgradePage.setVisible(false);
@@ -119,13 +118,12 @@ class PaymentPage extends JFrame {
             }
         });
 
-        // Add logic for jbBack
         jbBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Upgrade.upgradePage.setJMenuBar(Navbar.navbar);
                 Upgrade.upgradePage.setVisible(true);
-                Upgrade.upgradePage.setVisible(false);
+                PaymentPage.paymentPage.setVisible(false);
                 Upgrade.upgradePage.repaint();
                 Upgrade.upgradePage.revalidate();
             }
