@@ -1,1 +1,1 @@
-761395 test1 pass 7 123 gold true 761395 test2 pass 7 123 platinum true 897045 test3 pass 7 123 gold true 
+761395 test1 pass 7 123 reguler true 761395 test2 pass 7 123 platinum true 897045 test3 pass 7 123 gold true 
