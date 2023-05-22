@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 // jdk-18.0.2
@@ -90,6 +89,7 @@ class Upgrade extends JFrame {
 class PaymentPage extends JFrame {
 
     static JFrame paymentPage = new JFrame();
+    static String[] newDb;
     private JPanel paymentPanel;
     private JPanel jpHeading;
     private JButton jbBack;
@@ -122,21 +122,25 @@ class PaymentPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Login.dbModified[UserApp.tierIndexCurrentUser] = tier;
+                    PaymentPage.newDb[UserApp.tierIndexCurrentUser] = tier;
                 } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
                     // add pop-up buat relaunch aplikasi.
 
                 }
                 try {
-                    String toBeWritten = String.join(" ", Login.dbModified);
+                    String toBeWritten = String.join(" ", PaymentPage.newDb);
+                    System.out.println(toBeWritten);
                     FileWriter fw = new FileWriter(Login.db, false);
                     fw.write(toBeWritten + " ");
                     fw.close();
                     System.out.println("Database successfully overwritten.");
 
+                    // payment success
+                    new PaymentSuccess(tier);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                MainPage.arrangeAllMoviePanels(PaymentPage.newDb[UserApp.tierIndexCurrentUser]);
             }
         });
 
@@ -148,6 +152,36 @@ class PaymentPage extends JFrame {
                 PaymentPage.paymentPage.setVisible(false);
                 Upgrade.upgradePage.repaint();
                 Upgrade.upgradePage.revalidate();
+            }
+        });
+    }
+}
+
+class PaymentSuccess extends JFrame{
+    static JFrame paymentPage = new JFrame();
+    private JPanel jpPaymentSuccess;
+    private JButton jbYeay;
+    private JButton jbLater;
+    private JPanel jpYeay;
+    private JLabel jlYeay;
+    private JLabel jlDesc;
+    private JPanel jpButtonHolder;
+
+    public PaymentSuccess(String namaTier) {
+        paymentPage.setSize(400, 400);
+        paymentPage.setContentPane(jpPaymentSuccess);
+        paymentPage.setVisible(true);
+        jlYeay.setText(jlYeay.getText() + " " +namaTier);
+        jbYeay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserApp.mainApp.setJMenuBar(Navbar.navbar);
+                UserApp.mainApp.setVisible(true);
+                Upgrade.upgradePage.setVisible(false);
+                PaymentPage.paymentPage.setVisible(false);
+                paymentPage.setVisible(false);
+                UserApp.mainApp.repaint();
+                UserApp.mainApp.revalidate();
             }
         });
     }
@@ -242,11 +276,18 @@ class Navbar {
     public static JMenuItem history = new JMenuItem("History");
     public static JMenuItem logout = new JMenuItem("Logout");
 
+    public static void addUsernameInfoToNavbar(){
+        JMenu usernameInfo = new JMenu("  Halo, " + UserApp.currentUser.getNama());
+        usernameInfo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        navbar.add(usernameInfo);
+    }
+
     Navbar() {
         account.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         upgrade.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         history.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         logout.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+
         account.add(upgrade);
         account.add(history);
         account.add(logout);
@@ -255,7 +296,7 @@ class Navbar {
         Navbar.logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ngikngok) {
-                int result = JOptionPane.showConfirmDialog(UserApp.mainApp, "apakah anda adus riil?", "riil adus kah?",
+                int result = JOptionPane.showConfirmDialog(UserApp.mainApp, "Keluar dari JalaFlix?", "Logout",
                         JOptionPane.YES_NO_OPTION);
                 Navbar.logout.setSelected(true);
                 if (result == JOptionPane.YES_OPTION) {
@@ -272,6 +313,24 @@ class Navbar {
         Navbar.upgrade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String temp = "", data = "";
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(Login.db);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                    while ((temp = br.readLine()) != null) {
+                        data = temp;
+                    }
+                    fis.getChannel().position(0);
+                    br = new BufferedReader(new InputStreamReader(fis));
+                    br.close();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                PaymentPage.newDb = data.split(" ");
                 Upgrade.upgradePage.setJMenuBar(Navbar.navbar);
                 Upgrade.upgradePage.setVisible(true);
                 UserApp.mainApp.setVisible(false);
@@ -301,16 +360,20 @@ class Login {
     public static JPanel logPanel = new JPanel();
 
     public static final String db = "user_database_jalaflix_11.txt";
+    public static final String dbFilm = "film_database_jalaflix_11.txt";
+
     private static int userCount = 0;
 
     Login() {
         // read db
         try {
             String init_data = "000000 dummy dummy 0 0000 reguler true ";
+
             File dbUser = new File(db);
             if (dbUser.createNewFile()) {
                 System.out.println("File successfully created");
                 FileWriter fw = new FileWriter(db);
+
                 fw.write(init_data);
                 fw.close();
                 System.out.println("Successfully written initial data");
@@ -507,6 +570,7 @@ class Login {
                     // System.out.println(data); this works yay
 
                     String dbRaw[] = data.split(" ");
+                    dbModified = dbRaw;
                     ArrayList<String> usernameAll = new ArrayList<>();
                     ArrayList<String> passwordAll = new ArrayList<>();
                     for (int i = 0; i < dbRaw.length / 7; i++) {
@@ -590,6 +654,7 @@ class Login {
                         UserApp.tierIndexCurrentUser = UserApp.indexCurrentUser + (6 * UserApp.indexCurrentUser + 5);
                         System.out.println("user ke-" + userCount);
                         userCount++;
+                        Navbar.addUsernameInfoToNavbar();
 
                         // habis itu langsung masuk
                         loginTransition(0);
@@ -605,6 +670,7 @@ class Login {
                                         UserApp.indexCurrentUser = j;
                                         UserApp.tierIndexCurrentUser = j + (6 * j + 5);
                                         System.out.println("user ke-" + j);
+                                        Navbar.addUsernameInfoToNavbar();
                                         break;
                                     }
                                 }
@@ -658,7 +724,7 @@ class Login {
 }
 
 class MainPage {
-    private static Database db = new Database();
+    public static Database db = new Database();
     private static int banyakFilm = db.dbGetBanyakFilm();
     private static Color white = new Color(255, 255, 255);
     private static JPanel movies[] = new JPanel[banyakFilm];
