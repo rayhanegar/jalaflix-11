@@ -204,7 +204,7 @@ class History {
         movieHistoryPanel = new JPanel[MAX_BUCKET_ITEM];
         historyBucket = new Film[MAX_BUCKET_ITEM];
 
-        JLabel test = new JLabel("Sepuluh film yang baru saja Anda tonton!");
+        JLabel test = new JLabel("Delapan film yang baru saja Anda tonton!");
         JButton back = new JButton("go back");
         test.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -304,6 +304,7 @@ class Navbar {
                     navbar.remove(usernameInfo);
                     Login.logUser.setVisible(true);
                     UserApp.mainApp.setVisible(false);
+                    History.historyPage.setVisible(false);
                     Login.logUser.repaint();
                     Login.logUser.revalidate();
                 } else if (result == JOptionPane.NO_OPTION) {
@@ -847,6 +848,7 @@ class MainPage {
                         UserApp.mainApp.setJMenuBar(Navbar.navbar);
                         UserApp.mainApp.setVisible(true);
                         mainPanel.setVisible(false);
+                        newFrame.setVisible(false);
                         UserApp.mainApp.repaint();
                         UserApp.mainApp.revalidate();
                     }

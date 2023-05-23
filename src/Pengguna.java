@@ -17,7 +17,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
     protected String nama, tier; // tier = reguler, gold, plat
     protected Film[] akses;
     protected boolean statusActive; // active or no
-    protected Queue<Film> history = new LinkedList<>(); // maks 10 film dalam history
+    protected Queue<Film> history; // maks 10 film dalam history
 
     Pengguna() {
     }
@@ -29,6 +29,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         this.telp = telp;
         this.tier = tier;
         this.statusActive = statusActive;
+        history = new LinkedList<>();
     }
 
     public static int getCount() {
@@ -173,6 +174,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         System.out.println();
     }
 
+    // dont use setHistory(Film recent) cuz its deprecated and i cant be bothered to put jdocs
     public void setHistory(Film recent) {
         if (history.size() >= 10) {
             history.remove(0);
@@ -185,17 +187,17 @@ public class Pengguna extends Pelanggan implements UserMethods {
     public void setIndexHistory(int i) {
 
         if (historyLimitCounter < 8) {
-            history.add(Database.db[i]);
+            this.history.add(Database.db[i]);
             historyLimitCounter++;
         } else {
-            history.add(Database.db[i]);
-            history.poll();
+            this.history.add(Database.db[i]);
+            this.history.poll();
         }
     }
 
     public Film[] getRecentHistory() {
-        Film temp[] = new Film[history.size()];
-        history.toArray(temp);
+        Film temp[] = new Film[this.history.size()];
+        this.history.toArray(temp);
         return temp;
     }
 
