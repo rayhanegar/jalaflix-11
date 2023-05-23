@@ -275,9 +275,10 @@ class Navbar {
     public static JMenuItem upgrade = new JMenuItem("Upgrade");
     public static JMenuItem history = new JMenuItem("History");
     public static JMenuItem logout = new JMenuItem("Logout");
+    public static JMenu usernameInfo;
 
     public static void addUsernameInfoToNavbar(){
-        JMenu usernameInfo = new JMenu("  Halo, " + UserApp.currentUser.getNama());
+        usernameInfo = new JMenu("  Halo, " + UserApp.currentUser.getNama());
         usernameInfo.setFont(new Font("Segoe UI", Font.BOLD, 18));
         navbar.add(usernameInfo);
     }
@@ -300,6 +301,7 @@ class Navbar {
                         JOptionPane.YES_NO_OPTION);
                 Navbar.logout.setSelected(true);
                 if (result == JOptionPane.YES_OPTION) {
+                    navbar.remove(usernameInfo);
                     Login.logUser.setVisible(true);
                     UserApp.mainApp.setVisible(false);
                     Login.logUser.repaint();
