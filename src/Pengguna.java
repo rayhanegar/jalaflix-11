@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 
 class UmurNegatifException extends Exception {
@@ -17,7 +17,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
     protected String nama, tier; // tier = reguler, gold, plat
     protected Film[] akses;
     protected boolean statusActive; // active or no
-    protected ArrayList<Film> history = new ArrayList<>(); // maks 10 film dalam history
+    protected Queue<Film> history = new LinkedList<>(); // maks 10 film dalam history
 
     Pengguna() {
     }
@@ -180,23 +180,22 @@ public class Pengguna extends Pelanggan implements UserMethods {
         history.add(recent);
     }
 
+    private static int historyLimitCounter = 0;
+
     public void setIndexHistory(int i) {
-        history.add(Database.db[i]);
+
+        if (historyLimitCounter < 8) {
+            history.add(Database.db[i]);
+            historyLimitCounter++;
+        } else {
+            history.add(Database.db[i]);
+            history.poll();
+        }
     }
 
     public Film[] getRecentHistory() {
-        Film temp[];
-        if (history.size() > 10) {
-            temp = new Film[10];
-            for (int i = history.size() - 1, j = 0; i > history.size() - 10 && j < 10; i--, j++) {
-                temp[j] = history.get(i);
-            }
-        } else {
-            temp = new Film[history.size() + 1];
-            for (int i = 0; i < history.size(); i++) {
-                temp[i] = history.get(i);
-            }
-        }
+        Film temp[] = new Film[history.size()];
+        history.toArray(temp);
         return temp;
     }
 
