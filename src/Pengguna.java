@@ -29,7 +29,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         this.telp = telp;
         this.tier = tier;
         this.statusActive = statusActive;
-        history = new LinkedList<>();
+        this.history = new LinkedList<>();
     }
 
     public static int getCount() {
@@ -182,7 +182,7 @@ public class Pengguna extends Pelanggan implements UserMethods {
         history.add(recent);
     }
 
-    private static int historyLimitCounter = 0;
+    private int historyLimitCounter = 0;
 
     public void setIndexHistory(int i) {
 
